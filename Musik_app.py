@@ -129,3 +129,4 @@ if __name__ == "__main__":
 # Such algorythmen hinzufügen
     # binär
     # linear
+    
