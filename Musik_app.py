@@ -70,35 +70,36 @@ def main():
         print("2. Titel anzeigen")
         print("3. Titel suchen")
         print("4. Favoriten verwalten")
-        print("5. Programm beenden")
+        print("5. Playlist verwalten")
+        print("6. Programm beenden")
 
-        choice = input("Wähle eine Option: ")
+        main_choice = input("Wähle eine Option: ")
 
-        if choice == '1':
+        if main_choice == '1':
             while True:
                 print("\nTitel verwalten")
                 print("1. Titel hinzufügen")
                 print("2. Titel löschen")
                 print("3. Zurück")
-                manage_choice = input("Wähle eine Option: ")
-                if manage_choice == '1':
+                title_choice = input("Wähle eine Option: ")
+                if title_choice == '1':
                     title = input("Gib den Titel des Songs ein: ")
                     artist = input("Gib den Interpreten des Songs ein: ")
                     category = input("Gib die Kategorie des Songs ein: ")
                     library.add_song(title, artist, category)
-                elif manage_choice == '2':
+                elif title_choice == '2':
                     title = input("Gib den Titel des zu löschenden Songs ein: ")
                     library.delete_song(title)
-                elif manage_choice == "3":
+                elif title_choice == "3":
                     break
                 else:
                     print("Ungültige Option.")
-        elif choice == '2':
+        elif main_choice == '2':
             library.list_songs()
-        elif choice == '3':
+        elif main_choice == '3':
             search_term = input("Gib den Suchbegriff ein (Titel, Interpret oder Kategorie): ")
             library.search_song(search_term)
-        elif choice == '4':
+        elif main_choice == '4':
             while True:
                 print("\nFavoriten verwalten")
                 print("1. Favoriten anzeigen")
@@ -119,7 +120,55 @@ def main():
                     break
                 else:
                     print("Ungültige Option.")
-        elif choice == '5':
+        elif main_choice == '5':
+            while True:
+                print("\nPlaylist verwalten")
+                print("1. Playlist erstellen")
+                print("2. Playlist anpassen")
+                print("3. Playlist löschen")
+                print("4. Zurück")
+                play_choice = input("Wähle eine Option: ")
+                if play_choice == '1':
+                    while True:
+                        print("\nPlaylist erstellen")
+                        print("1. Titel Auswählen") # Titel einzeln auswählen mit Suchalgorithmus -> als Liste NAME DER PLAYLIST EINZIGARTIG
+                        print("2. zufällige Titel einer Kategorie")
+                        print("3. zufällige Titel eines Künstlers")
+                        print("4. Zurück")
+                        create_play_choice = input("Wähle eine Option: ")
+                        if create_play_choice == '1':
+                            print("asap")
+                        elif create_play_choice == '2':
+                            print("asap")
+                        elif create_play_choice == '3':
+                            print("asap")
+                        elif create_play_choice == '4':
+                            break
+                        else:
+                            print("Ungültige Option.")
+                elif play_choice == '2':
+                    while True:
+                        print("\nPlaylist anpassen")
+                        print("1. Titel hinzufügen") # Zuerst Playlist auswählen und dann Titel angeben
+                        print("2. Titel entfernen") # Zuerst Playlist auswählen und dann Titel angeben
+                        print("3. Zurück")
+                        adjust_play_choice = input("Wähle eine Option: ")
+                        if adjust_play_choice == '1':
+                            print("asap")
+                        elif adjust_play_choice == '2':
+                            print("asap")
+                        elif adjust_play_choice == '3':
+                            break
+                        else:
+                            print("Ungültige Option.")
+                elif play_choice == '3':
+                    print("asap") #Eingabe des Playlist namen dann nochmal bestätigen mit Y/N
+                elif play_choice == '4':
+                    break
+                else:
+                    print("Ungültige Option.")
+
+        elif main_choice == '6':
             print("Programm beendet.")
             break
         else:
@@ -129,7 +178,7 @@ if __name__ == "__main__":
     main()
 
 
-# Playlist erstllen 
+# Playlist erstllen NAME DER PLAYLIST EINZIGARTIG!
     # Mithilfe von Filtern Songs Auswählen
     # Song suche
 # Playlist oder Favoriten "abspielen"
