@@ -75,42 +75,50 @@ def main():
         choice = input("Wähle eine Option: ")
 
         if choice == '1':
-            print("\nTitel verwalten")
-            print("1. Titel hinzufügen")
-            print("2. Titel löschen")
-            manage_choice = input("Wähle eine Option: ")
-            if manage_choice == '1':
-                title = input("Gib den Titel des Songs ein: ")
-                artist = input("Gib den Interpreten des Songs ein: ")
-                category = input("Gib die Kategorie des Songs ein: ")
-                library.add_song(title, artist, category)
-            elif manage_choice == '2':
-                title = input("Gib den Titel des zu löschenden Songs ein: ")
-                library.delete_song(title)
-            else:
-                print("Ungültige Option.")
+            while True:
+                print("\nTitel verwalten")
+                print("1. Titel hinzufügen")
+                print("2. Titel löschen")
+                print("3. Zurück")
+                manage_choice = input("Wähle eine Option: ")
+                if manage_choice == '1':
+                    title = input("Gib den Titel des Songs ein: ")
+                    artist = input("Gib den Interpreten des Songs ein: ")
+                    category = input("Gib die Kategorie des Songs ein: ")
+                    library.add_song(title, artist, category)
+                elif manage_choice == '2':
+                    title = input("Gib den Titel des zu löschenden Songs ein: ")
+                    library.delete_song(title)
+                elif manage_choice == "3":
+                    break
+                else:
+                    print("Ungültige Option.")
         elif choice == '2':
             library.list_songs()
         elif choice == '3':
             search_term = input("Gib den Suchbegriff ein (Titel, Interpret oder Kategorie): ")
             library.search_song(search_term)
         elif choice == '4':
-            print("\nFavoriten verwalten")
-            print("1. Favoriten anzeigen")
-            print("2. Song zu Favoriten hinzufügen")
-            print("3. Song aus Favoriten entfernen")
-            fav_choice = input("Wähle eine Option: ")
-            if fav_choice == '1':
-                library.list_favorites()
-            elif fav_choice == '2':
-                title = input("Gib den Titel des Songs ein: ")
-                library.add_favorite(title)
-            elif fav_choice == '3':
-                library.list_favorites()
-                index = int(input("Gib die Nummer des zu entfernenden Songs ein: ")) - 1
-                library.remove_favorite(index)
-            else:
-                print("Ungültige Option.")
+            while True:
+                print("\nFavoriten verwalten")
+                print("1. Favoriten anzeigen")
+                print("2. Song zu Favoriten hinzufügen")
+                print("3. Song aus Favoriten entfernen")
+                print("4. Zurück")
+                fav_choice = input("Wähle eine Option: ")
+                if fav_choice == '1':
+                    library.list_favorites()
+                elif fav_choice == '2':
+                    title = input("Gib den Titel des Songs ein: ")
+                    library.add_favorite(title)
+                elif fav_choice == '3':
+                    library.list_favorites()
+                    index = int(input("Gib die Nummer des zu entfernenden Songs ein: ")) - 1
+                    library.remove_favorite(index)
+                elif fav_choice == '4':
+                    break
+                else:
+                    print("Ungültige Option.")
         elif choice == '5':
             print("Programm beendet.")
             break
@@ -122,11 +130,12 @@ if __name__ == "__main__":
 
 
 # Playlist erstllen 
+    # Mithilfe von Filtern Songs Auswählen
+    # Song suche
 # Playlist oder Favoriten "abspielen"
-    #abspielen mit iter()
-    #vllt zufälliges abspielen
+    # abspielen mit iter()
+    # vllt zufälliges abspielen
 # hinzufügen von Songs durch Datei
 # Such algorythmen hinzufügen
     # binär
     # linear
-    
