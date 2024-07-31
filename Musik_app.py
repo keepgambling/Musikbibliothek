@@ -3,15 +3,15 @@ class MusicLibrary:
         self.songs = []
         self.favorites = []
 
-    def add_song(self, title, artist, category):
+    def add_song(self, title, artist, genre):
         song = {
             'title': title,
             'artist': artist,
-            'category': category
+            'genre': genre
         }
         self.songs.append(song)
         self.sort_songs()
-        print(f"Song '{title}' von {artist} in der Kategorie '{category}' hinzugefügt und sortiert.")
+        print(f"Song '{title}' von {artist} im Genre '{genre}' hinzugefügt und sortiert.")
 
     def delete_song(self, title):
         song = next((song for song in self.songs if song['title'].lower() == title.lower()), None)
@@ -25,17 +25,17 @@ class MusicLibrary:
     def list_songs(self):
         print("\nListe der Songs:")
         for idx, song in enumerate(self.songs, start=1):
-            print(f"{idx}. {song['title']} - {song['artist']} ({song['category']})")
+            print(f"{idx}. {song['title']} - {song['artist']} ({song['genre']})")
 
     def sort_songs(self):
-        self.songs.sort(key=lambda x: (x['title'].lower(), x['artist'].lower(), x['category'].lower()))
+        self.songs.sort(key=lambda x: (x['title'].lower(), x['artist'].lower(), x['genre'].lower()))
 
     def search_song(self, search_term):
-        results = [song for song in self.songs if search_term.lower() in song['title'].lower() or search_term.lower() in song['artist'].lower() or search_term.lower() in song['category'].lower()]
+        results = [song for song in self.songs if search_term.lower() in song['title'].lower() or search_term.lower() in song['artist'].lower() or search_term.lower() in song['genre'].lower()]
         if results:
             print("\nSuchergebnisse:")
             for idx, song in enumerate(results, start=1):
-                print(f"{idx}. {song['title']} - {song['artist']} ({song['category']})")
+                print(f"{idx}. {song['title']} - {song['artist']} ({song['genre']})")
         else:
             print("Keine Songs gefunden.")
 
@@ -57,7 +57,7 @@ class MusicLibrary:
     def list_favorites(self):
         print("\nListe der Favoriten:")
         for idx, song in enumerate(self.favorites, start=1):
-            print(f"{idx}. {song['title']} - {song['artist']} ({song['category']})")
+            print(f"{idx}. {song['title']} - {song['artist']} ({song['genre']})")
 
 
 def main():
@@ -85,8 +85,8 @@ def main():
                 if title_choice == '1':
                     title = input("Gib den Titel des Songs ein: ")
                     artist = input("Gib den Interpreten des Songs ein: ")
-                    category = input("Gib die Kategorie des Songs ein: ")
-                    library.add_song(title, artist, category)
+                    genre = input("Gib das Genre des Songs ein: ")
+                    library.add_song(title, artist, genre)
                 elif title_choice == '2':
                     title = input("Gib den Titel des zu löschenden Songs ein: ")
                     library.delete_song(title)
@@ -97,7 +97,7 @@ def main():
         elif main_choice == '2':
             library.list_songs()
         elif main_choice == '3':
-            search_term = input("Gib den Suchbegriff ein (Titel, Interpret oder Kategorie): ")
+            search_term = input("Gib den Suchbegriff ein (Titel, Interpret oder Genre): ")
             library.search_song(search_term)
         elif main_choice == '4':
             while True:
@@ -132,7 +132,7 @@ def main():
                     while True:
                         print("\nPlaylist erstellen")
                         print("1. Titel Auswählen") # Titel einzeln auswählen mit Suchalgorithmus -> als Liste NAME DER PLAYLIST EINZIGARTIG
-                        print("2. zufällige Titel einer Kategorie")
+                        print("2. zufällige Titel einer Genre")
                         print("3. zufällige Titel eines Künstlers")
                         print("4. Zurück")
                         create_play_choice = input("Wähle eine Option: ")
@@ -167,7 +167,6 @@ def main():
                     break
                 else:
                     print("Ungültige Option.")
-
         elif main_choice == '6':
             print("Programm beendet.")
             break
