@@ -75,36 +75,36 @@ def main():
     while True:
         print("\nHauptmenü")
         print("1. Titel verwalten")
-        print("2. Titel anzeigen")
-        print("3. Titel suchen")
-        print("4. Favoriten verwalten")
-        print("5. Playlist verwalten")
-        print("6. Programm beenden")
+        print("2. Titel suchen")
+        print("3. Favoriten verwalten")
+        print("4. Playlist verwalten")
+        print("5. Programm beenden")
 
         main_choice = input("Wähle eine Option: ")
 
         if main_choice == '1':
             while True:
                 print("\nTitel verwalten")
-                print("1. Titel hinzufügen")
-                print("2. Titel löschen")
-                print("3. Zurück")
+                print("1. Titel anzeigen")
+                print("2. Titel hinzufügen")
+                print("3. Titel löschen")
+                print("4. Zurück")
                 title_choice = input("Wähle eine Option: ")
                 if title_choice == '1':
+                    library.list_songs()
+                if title_choice == '2':
                     title = input("Gib den Titel des Songs ein: ")
                     artist = input("Gib den Interpreten des Songs ein: ")
                     genre = input("Gib das Genre des Songs ein: ")
                     library.add_song(title, artist, genre)
-                elif title_choice == '2':
+                elif title_choice == '3':
                     title = input("Gib den Titel des zu löschenden Songs ein: ")
                     library.delete_song(title)
-                elif title_choice == "3":
+                elif title_choice == "4":
                     break
                 else:
                     print("Ungültige Option.")
         elif main_choice == '2':
-            library.list_songs()
-        elif main_choice == '3':
             while True:
                 print("\nTitel suchen")
                 print("1. SUCHALGORiTHMUS 1")
@@ -123,7 +123,7 @@ def main():
                     break
                 else:
                     print("Ungültige Option.")
-        elif main_choice == '4':
+        elif main_choice == '3':
             while True:
                 print("\nFavoriten verwalten")
                 print("1. Favoriten anzeigen")
@@ -144,7 +144,7 @@ def main():
                     break
                 else:
                     print("Ungültige Option.")
-        elif main_choice == '5':
+        elif main_choice == '4':
             while True:
                 print("\nPlaylist verwalten")
                 print("1. Playlist erstellen")
@@ -191,7 +191,7 @@ def main():
                     break
                 else:
                     print("Ungültige Option.")
-        elif main_choice == '6':
+        elif main_choice == '5':
             print("Programm beendet.")
             break
         else:
