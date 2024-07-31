@@ -1,8 +1,10 @@
 class MusicLibrary:
     def __init__(self):
+        # Erstellen von Listen für Songs und Favoriten
         self.songs = []
         self.favorites = []
 
+    # Funktion zum Hinzufügen von Songs
     def add_song(self, title, artist, genre):
         song = {
             'title': title,
@@ -13,6 +15,7 @@ class MusicLibrary:
         self.sort_songs()
         print(f"Song '{title}' von {artist} im Genre '{genre}' hinzugefügt und sortiert.")
 
+    # Funktion um Songs aus der Bibilithek zu löschen
     def delete_song(self, title):
         song = next((song for song in self.songs if song['title'].lower() == title.lower()), None)
         if song:
@@ -22,11 +25,13 @@ class MusicLibrary:
         else:
             print(f"Song '{title}' nicht gefunden.")
 
+    # Funktion welche alle Songs der Bibiliothek aufgibt
     def list_songs(self):
         print("\nListe der Songs:")
         for idx, song in enumerate(self.songs, start=1):
             print(f"{idx}. {song['title']} - {song['artist']} ({song['genre']})")
 
+    # Funktion welche Songs sortiert 
     def sort_songs(self):
         self.songs.sort(key=lambda x: (x['title'].lower(), x['artist'].lower(), x['genre'].lower()))
 
@@ -39,6 +44,7 @@ class MusicLibrary:
         else:
             print("Keine Songs gefunden.")
 
+    # Funktion um Song zu den Favoriten hinzuzufügen
     def add_favorite(self, title):
         song = next((song for song in self.songs if song['title'].lower() == title.lower()), None)
         if song and song not in self.favorites:
@@ -47,6 +53,7 @@ class MusicLibrary:
         else:
             print("Song ist entweder nicht in der Bibliothek oder bereits in den Favoriten.")
 
+    # Funktion um Song aus den Favoriten zu entfernen
     def remove_favorite(self, index):
         if 0 <= index < len(self.favorites):
             removed_song = self.favorites.pop(index)
@@ -54,6 +61,7 @@ class MusicLibrary:
         else:
             print("Ungültige Nummer.")
 
+    # Funktion welche die Titel der Favoriten ausgibt
     def list_favorites(self):
         print("\nListe der Favoriten:")
         for idx, song in enumerate(self.favorites, start=1):
@@ -180,10 +188,10 @@ if __name__ == "__main__":
 # Playlist erstllen NAME DER PLAYLIST EINZIGARTIG!
     # Mithilfe von Filtern Songs Auswählen
     # Song suche
-# Playlist oder Favoriten "abspielen"
+# Playlist oder Favoriten "abspielen" ITERATOR
     # abspielen mit iter()
     # vllt zufälliges abspielen
-# hinzufügen von Songs durch Datei
-# Such algorythmen hinzufügen
+# hinzufügen von Songs durch Datei vllt Zugrunde Ligende Datei
+# Such algorythmen hinzufügen AKTUELLE SUCHFUNKTION ÄNDERN!!!!
     # binär
     # linear
