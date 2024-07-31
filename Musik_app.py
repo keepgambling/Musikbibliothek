@@ -105,8 +105,24 @@ def main():
         elif main_choice == '2':
             library.list_songs()
         elif main_choice == '3':
-            search_term = input("Gib den Suchbegriff ein (Titel, Interpret oder Genre): ")
-            library.search_song(search_term)
+            while True:
+                print("\nTitel suchen")
+                print("1. SUCHALGORiTHMUS 1")
+                print("2. SUCHALGORITHMUS 2")
+                print("3. SUCHALGORiTHMUS 3")
+                print("4. Zurück")
+                search_choice = input("Wähle ein Option: ")
+                if search_choice == '1':
+                    print("SUCHALGORiTHMUS 1")
+                elif search_choice == '2':
+                    print("SUCHALGORiTHMUS 2")
+                elif search_choice == '3':
+                    search_term = input("Gib den Suchbegriff ein (Titel, Interpret oder Genre): ")
+                    library.search_song(search_term)
+                elif search_choice == '4':
+                    break
+                else:
+                    print("Ungültige Option.")
         elif main_choice == '4':
             while True:
                 print("\nFavoriten verwalten")
