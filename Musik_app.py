@@ -3,7 +3,7 @@ import Songs
 class MusicLibrary:
     def __init__(self):
         # Erstellen von Listen für Songs und Favoriten
-        self.songs = [Songs.songs]
+        self.songs = Songs.songs
         self.favorites = []
 
     # Funktion zum Hinzufügen von Songs
@@ -94,7 +94,7 @@ def main():
                 title_choice = input("Wähle eine Option: ")
                 if title_choice == '1':
                     library.list_songs()
-                if title_choice == '2':
+                elif title_choice == '2':
                     title = input("Gib den Titel des Songs ein: ")
                     artist = input("Gib den Interpreten des Songs ein: ")
                     genre = input("Gib das Genre des Songs ein: ")
