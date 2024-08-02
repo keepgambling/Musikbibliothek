@@ -258,3 +258,5 @@ if __name__ == "__main__":
     # binär
     # linear
 # Begrenzung bei Genre (vorgegbene Genres)
+
+# Speichern von Songs, Playlist und Fvoriten in Dateien
