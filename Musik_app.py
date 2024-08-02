@@ -69,7 +69,6 @@ class MusicLibrary:
         for idx, song in enumerate(self.favorites, start=1):
             print(f"{idx}. {song['title']} - {song['artist']} ({song['genre']})")
 
-
 # Function to manage songs
 def manage_songs(library):
     while True:
