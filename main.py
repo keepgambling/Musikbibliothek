@@ -18,7 +18,7 @@ class Song:
 class RedBlackNode:
     def __init__(self, song):
         self.song = song
-        self.color = "RED"  # All newly inserted nodes are red by default
+        self.color = "RED"
         self.left = None
         self.right = None
         self.parent = None
@@ -163,16 +163,15 @@ class MusicApp:
     def add_song(self, title, artist, album):
         song = Song(title, artist, album)
         self.songs.append(song)
-        self.rbt.insert(song)  # Insert into the Red-Black Tree
-        self.save_songs()  # Save after adding a song
+        self.rbt.insert(song)
+        self.save_songs()
         print(f"'{song}' added to your music library.")
 
     def delete_song(self, title):
         song_to_delete = next((s for s in self.songs if s.title == title), None)
         if song_to_delete:
             self.songs.remove(song_to_delete)
-            # Note: Red-Black Tree deletion would require a delete operation to be implemented
-            self.save_songs()  # Save after deleting a song
+            self.save_songs()
             print(f"'{song_to_delete}' removed from your music library.")
         else:
             print(f"'{title}' not found in your music library.")
