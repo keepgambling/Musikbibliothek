@@ -1,4 +1,7 @@
 import os
+import time
+import random
+import string
 
 class Song:
     """Class to represent a song with title, artist, and album."""
@@ -11,6 +14,7 @@ class Song:
         return f"{self.title} by {self.artist} ({self.album})"
 
     def __lt__(self, other):
+        """Compare songs based on title, artist, and album."""
         if self.title == other.title:
             if self.artist == other.artist:
                 return self.album < other.album
@@ -18,7 +22,9 @@ class Song:
         return self.title < other.title
 
     def __eq__(self, other):
+        """Check if two songs are equal."""
         return self.title == other.title and self.artist == other.artist and self.album == other.album
+
 
 class RedBlackNode:
     """Node for Red-Black Tree, storing a song and pointers to children and parent."""
@@ -29,8 +35,9 @@ class RedBlackNode:
         self.right = None
         self.parent = None
 
+
 class RedBlackTree:
-    """Implementation of Red-Black Tree for storing songs."""
+    """Red-Black Tree implementation to store songs."""
     def __init__(self):
         self.NIL = RedBlackNode(None)
         self.NIL.color = "BLACK"
@@ -41,7 +48,6 @@ class RedBlackTree:
         new_node = RedBlackNode(song)
         new_node.left = self.NIL
         new_node.right = self.NIL
-
         parent = None
         current = self.root
 
@@ -64,7 +70,7 @@ class RedBlackTree:
         self.fix_insert(new_node)
 
     def fix_insert(self, node):
-        """Fix the Red-Black Tree after an insertion to maintain balance."""
+        """Fix the Red-Black Tree after an insertion."""
         while node != self.root and node.parent.color == "RED":
             if node.parent == node.parent.parent.left:
                 uncle = node.parent.parent.right
@@ -98,7 +104,7 @@ class RedBlackTree:
         self.root.color = "BLACK"
 
     def left_rotate(self, x):
-        """Perform a left rotation in the Red-Black Tree."""
+        """Perform a left rotation."""
         y = x.right
         x.right = y.left
         if y.left != self.NIL:
@@ -114,7 +120,7 @@ class RedBlackTree:
         x.parent = y
 
     def right_rotate(self, x):
-        """Perform a right rotation in the Red-Black Tree."""
+        """Perform a right rotation."""
         y = x.left
         x.left = y.right
         if y.right != self.NIL:
@@ -134,15 +140,16 @@ class RedBlackTree:
         return self._search_recursive(self.root, song)
 
     def _search_recursive(self, node, song):
-        """Helper method to recursively search the tree."""
+        """Helper method for recursive search."""
         if node == self.NIL or node.song == song:
             return node != self.NIL
         if song < node.song:
             return self._search_recursive(node.left, song)
         return self._search_recursive(node.right, song)
 
+
 class MusicLibrary:
-    """Music library that stores songs and manages operations like adding, deleting, searching."""
+    """Music library for managing songs."""
     FILENAME = "songs.csv"
 
     def __init__(self):
@@ -151,7 +158,7 @@ class MusicLibrary:
         self.load_songs()
 
     def load_songs(self):
-        """Load songs from a file into the music library."""
+        """Load songs from the file."""
         if os.path.exists(self.FILENAME):
             with open(self.FILENAME, 'r') as file:
                 for line in file:
@@ -162,17 +169,17 @@ class MusicLibrary:
                         self.rbt.insert(song)
             print(f"{len(self.songs)} songs loaded from {self.FILENAME}.")
         else:
-            print("No songs found. Starting with an empty music library.")
+            print("No songs found. Starting with an empty library.")
 
     def save_songs(self):
-        """Save all songs to a file."""
+        """Save songs to a file."""
         with open(self.FILENAME, 'w') as file:
             for song in self.songs:
                 file.write(f"{song.title},{song.artist},{song.album}\n")
         print(f"{len(self.songs)} songs saved to {self.FILENAME}.")
 
     def add_song(self, title, artist, album):
-        """Add a song to the library and save to file."""
+        """Add a new song to the library."""
         song = Song(title, artist, album)
         self.songs.append(song)
         self.rbt.insert(song)
@@ -180,14 +187,14 @@ class MusicLibrary:
         print(f"'{song}' added to your music library.")
 
     def delete_song(self, title):
-        """Delete a song from the library and save changes to file."""
+        """Delete a song by title."""
         song_to_delete = next((s for s in self.songs if s.title == title), None)
         if song_to_delete:
             self.songs.remove(song_to_delete)
             self.save_songs()
             print(f"'{song_to_delete}' removed from your music library.")
         else:
-            print(f"'{title}' not found in your music library.")
+            print(f"'{title}' not found.")
 
     def display_songs(self):
         """Display all songs in the library."""
@@ -199,7 +206,7 @@ class MusicLibrary:
             print("Your music library is empty.")
 
     def linear_search(self, title):
-        """Perform a linear search for a song by title."""
+        """Perform a linear search by title."""
         for index, song in enumerate(self.songs):
             if song.title == title:
                 return index
@@ -211,7 +218,7 @@ class MusicLibrary:
         return self.rbt.search(song_to_search)
 
     def sort_songs(self):
-        """Choose and execute a sorting algorithm."""
+        """Display sorting options and execute sorting."""
         while True:
             print("Choose sorting algorithm:")
             print("1. Bubble Sort")
@@ -219,41 +226,30 @@ class MusicLibrary:
             print("3. Merge Sort")
             print("4. Quick Sort")
             print("5. Back")
-
             choice = input("Enter your choice: ").strip()
 
             if choice == '1':
-                import time
-                start_time = time.time()
-                self.bubble_sort()
-                print(f"Time taken: {time.time() - start_time:.6f} seconds.")
-                self.save_songs()
+                self._measure_sort_time(self.bubble_sort)
             elif choice == '2':
-                import time
-                start_time = time.time()
-                self.insertion_sort()
-                print(f"Time taken: {time.time() - start_time:.6f} seconds.")
-                self.save_songs()
+                self._measure_sort_time(self.insertion_sort)
             elif choice == '3':
-                import time
-                start_time = time.time()
-                self.songs = self.merge_sort(self.songs)
-                print(f"Time taken: {time.time() - start_time:.6f} seconds.")
-                self.save_songs()
+                self._measure_sort_time(lambda: self.merge_sort(self.songs))
             elif choice == '4':
-                import time
-                start_time = time.time()
-                self.quick_sort(0, len(self.songs) - 1)
-                print(f"Time taken: {time.time() - start_time:.6f} seconds.")
-                self.save_songs()
+                self._measure_sort_time(lambda: self.quick_sort(0, len(self.songs) - 1))
             elif choice == '5':
-                # Go back to the main menu
                 return
             else:
                 print("Invalid choice. Please try again.")
 
+    def _measure_sort_time(self, sort_function):
+        """Measure and display the time taken by a sorting algorithm."""
+        start_time = time.time()
+        sort_function()
+        print(f"Time taken: {time.time() - start_time:.6f} seconds.")
+        self.save_songs()
+
     def bubble_sort(self):
-        """Bubble sort algorithm to sort the songs."""
+        """Bubble sort algorithm."""
         n = len(self.songs)
         for i in range(n):
             swapped = False
@@ -266,7 +262,7 @@ class MusicLibrary:
         print("Sorted using Bubble Sort.")
 
     def insertion_sort(self):
-        """Insertion sort algorithm to sort the songs."""
+        """Insertion sort algorithm."""
         for i in range(1, len(self.songs)):
             key_song = self.songs[i]
             j = i - 1
@@ -284,13 +280,12 @@ class MusicLibrary:
         mid = len(array) // 2
         left_half = self.merge_sort(array[:mid])
         right_half = self.merge_sort(array[mid:])
+        return self._merge(left_half, right_half)
 
-        return self.merge(left_half, right_half)
-
-    def merge(self, left, right):
-        """Helper function to merge two halves in merge sort."""
+    def _merge(self, left, right):
+        """Helper method to merge two arrays."""
         result = []
-        i = j = 0
+        i, j = 0, 0
 
         while i < len(left) and j < len(right):
             if left[i] < right[j]:
@@ -307,11 +302,11 @@ class MusicLibrary:
     def quick_sort(self, low, high):
         """Quick sort algorithm."""
         if low < high:
-            pi = self.partition(low, high)
+            pi = self._partition(low, high)
             self.quick_sort(low, pi - 1)
             self.quick_sort(pi + 1, high)
 
-    def partition(self, low, high):
+    def _partition(self, low, high):
         """Partition function for quick sort."""
         pivot = self.songs[high]
         i = low - 1
@@ -325,10 +320,7 @@ class MusicLibrary:
         return i + 1
 
     def create_random_songs(self, count):
-        """Create a given number of random songs."""
-        import random
-        import string
-
+        """Create random songs."""
         for _ in range(count):
             title = ''.join(random.choices(string.ascii_uppercase, k=random.randint(5, 10)))
             artist = ''.join(random.choices(string.ascii_uppercase, k=random.randint(5, 10)))
@@ -336,9 +328,10 @@ class MusicLibrary:
             self.add_song(title, artist, album)
 
 
-# Function to manage songs
+# Functions for menu management
+
 def manage_songs(library):
-    """Menu to manage songs in the music library."""
+    """Manage songs in the library."""
     while True:
         print("\nManage Songs")
         print("1. Display Songs")
@@ -347,6 +340,7 @@ def manage_songs(library):
         print("4. Delete Song")
         print("5. Back")
         choice = input("Choose an option: ")
+
         if choice == '1':
             library.display_songs()
         elif choice == '2':
@@ -365,38 +359,40 @@ def manage_songs(library):
         else:
             print("Invalid option.")
 
-# Function to search for songs
+
 def search_songs(library):
-    """Menu to search for songs in the music library."""
+    """Search for songs in the library."""
     while True:
         print("\nSearch Songs")
         print("1. Linear Search")
         print("2. Binary Search")
         print("3. Back")
         choice = input("Choose an option: ")
+
         if choice == '1':
             title = input("Enter the song title: ")
             result = library.linear_search(title)
             if result != -1:
-                print(f"'{library.songs[result]}' found in your music library at position {result + 1}.")
+                print(f"'{library.songs[result]}' found at position {result + 1}.")
             else:
-                print(f"'{title}' not found in your music library.")
+                print(f"'{title}' not found.")
         elif choice == '2':
             title = input("Enter the song title: ")
             found = library.binary_search(title)
             if found:
                 print(f"'{title}' found in your music library.")
             else:
-                print(f"'{title}' not found in your music library.")
+                print(f"'{title}' not found.")
         elif choice == '3':
             break
         else:
             print("Invalid option.")
 
 
-# Main function to manage the entire library
+# Main function
+
 def main():
-    """Main function to run the music library application."""
+    """Main program to run the music library."""
     library = MusicLibrary()
     print("Welcome to your Music Library")
 
@@ -406,7 +402,6 @@ def main():
         print("2. Search Songs")
         print("3. Sort Songs")
         print("4. Exit")
-
         main_choice = input("Choose an option: ")
 
         if main_choice == '1':
@@ -420,6 +415,7 @@ def main():
             break
         else:
             print("Invalid option. Please try again.")
+
 
 if __name__ == "__main__":
     main()
