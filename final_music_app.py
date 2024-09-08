@@ -4,17 +4,17 @@ import random
 import string
 
 class Song:
-    """Class to represent a song with title, artist, and album."""
+    """Klasse, die ein Lied mit Titel, Künstler und Album darstellt."""
     def __init__(self, title, artist, album):
         self.title = title
         self.artist = artist
         self.album = album
 
     def __str__(self):
-        return f"{self.title} by {self.artist} ({self.album})"
+        return f"{self.title} von {self.artist} ({self.album})"
 
     def __lt__(self, other):
-        """Compare songs based on title, artist, and album."""
+        """Vergleiche Lieder basierend auf Titel, Künstler und Album."""
         if self.title == other.title:
             if self.artist == other.artist:
                 return self.album < other.album
@@ -22,12 +22,12 @@ class Song:
         return self.title < other.title
 
     def __eq__(self, other):
-        """Check if two songs are equal."""
+        """Überprüfen, ob zwei Lieder gleich sind."""
         return self.title == other.title and self.artist == other.artist and self.album == other.album
 
 
 class RedBlackNode:
-    """Node for Red-Black Tree, storing a song and pointers to children and parent."""
+    """Knoten für Rot-Schwarz-Baum, der ein Lied und Zeiger auf Kinder und Eltern speichert."""
     def __init__(self, song):
         self.song = song
         self.color = "RED"
@@ -37,14 +37,14 @@ class RedBlackNode:
 
 
 class RedBlackTree:
-    """Red-Black Tree implementation to store songs."""
+    """Rot-Schwarz-Baum-Implementierung zur Speicherung von Liedern."""
     def __init__(self):
         self.NIL = RedBlackNode(None)
         self.NIL.color = "BLACK"
         self.root = self.NIL
 
     def insert(self, song):
-        """Insert a new song into the Red-Black Tree."""
+        """Füge ein neues Lied in den Rot-Schwarz-Baum ein."""
         new_node = RedBlackNode(song)
         new_node.left = self.NIL
         new_node.right = self.NIL
@@ -70,7 +70,7 @@ class RedBlackTree:
         self.fix_insert(new_node)
 
     def fix_insert(self, node):
-        """Fix the Red-Black Tree after an insertion."""
+        """Korrigiere den Rot-Schwarz-Baum nach dem Einfügen."""
         while node != self.root and node.parent.color == "RED":
             if node.parent == node.parent.parent.left:
                 uncle = node.parent.parent.right
@@ -104,7 +104,7 @@ class RedBlackTree:
         self.root.color = "BLACK"
 
     def left_rotate(self, x):
-        """Perform a left rotation."""
+        """Führe eine Linksrotation durch."""
         y = x.right
         x.right = y.left
         if y.left != self.NIL:
@@ -120,7 +120,7 @@ class RedBlackTree:
         x.parent = y
 
     def right_rotate(self, x):
-        """Perform a right rotation."""
+        """Führe eine Rechtsrotation durch."""
         y = x.left
         x.left = y.right
         if y.right != self.NIL:
@@ -136,11 +136,11 @@ class RedBlackTree:
         x.parent = y
 
     def search(self, song):
-        """Search for a song in the Red-Black Tree."""
+        """Suche nach einem Lied im Rot-Schwarz-Baum."""
         return self._search_recursive(self.root, song)
 
     def _search_recursive(self, node, song):
-        """Helper method for recursive search."""
+        """Hilfsmethode für die rekursive Suche."""
         if node == self.NIL or node.song == song:
             return node != self.NIL
         if song < node.song:
@@ -149,7 +149,7 @@ class RedBlackTree:
 
 
 class MusicLibrary:
-    """Music library for managing songs."""
+    """Musikbibliothek zur Verwaltung von Liedern."""
     FILENAME = "songs.csv"
 
     def __init__(self):
@@ -158,7 +158,7 @@ class MusicLibrary:
         self.load_songs()
 
     def load_songs(self):
-        """Load songs from the file."""
+        """Lade Lieder aus der Datei."""
         if os.path.exists(self.FILENAME):
             with open(self.FILENAME, 'r') as file:
                 for line in file:
@@ -167,66 +167,66 @@ class MusicLibrary:
                         song = Song(title, artist, album)
                         self.songs.append(song)
                         self.rbt.insert(song)
-            print(f"{len(self.songs)} songs loaded from {self.FILENAME}.")
+            print(f"{len(self.songs)} Lieder aus {self.FILENAME} geladen.")
         else:
-            print("No songs found. Starting with an empty library.")
+            print("Keine Lieder gefunden. Beginne mit einer leeren Bibliothek.")
 
     def save_songs(self):
-        """Save songs to a file."""
+        """Speichere Lieder in eine Datei."""
         with open(self.FILENAME, 'w') as file:
             for song in self.songs:
                 file.write(f"{song.title},{song.artist},{song.album}\n")
-        print(f"{len(self.songs)} songs saved to {self.FILENAME}.")
+        print(f"{len(self.songs)} Lieder in {self.FILENAME} gespeichert.")
 
     def add_song(self, title, artist, album):
-        """Add a new song to the library."""
+        """Füge ein neues Lied zur Bibliothek hinzu."""
         song = Song(title, artist, album)
         self.songs.append(song)
         self.rbt.insert(song)
         self.save_songs()
-        print(f"'{song}' added to your music library.")
+        print(f"'{song}' wurde deiner Musikbibliothek hinzugefügt.")
 
     def delete_song(self, title):
-        """Delete a song by title."""
+        """Lösche ein Lied nach Titel."""
         song_to_delete = next((s for s in self.songs if s.title == title), None)
         if song_to_delete:
             self.songs.remove(song_to_delete)
             self.save_songs()
-            print(f"'{song_to_delete}' removed from your music library.")
+            print(f"'{song_to_delete}' wurde aus deiner Musikbibliothek entfernt.")
         else:
-            print(f"'{title}' not found.")
+            print(f"'{title}' wurde in deiner Musikbibliothek nicht gefunden.")
 
     def display_songs(self):
-        """Display all songs in the library."""
+        """Zeige alle Lieder in der Bibliothek an."""
         if self.songs:
-            print("Your music library:")
+            print("Deine Musikbibliothek:")
             for i, song in enumerate(self.songs, 1):
                 print(f"{i}. {song}")
         else:
-            print("Your music library is empty.")
+            print("Deine Musikbibliothek ist leer.")
 
     def linear_search(self, title):
-        """Perform a linear search by title."""
+        """Lineare Suche nach einem Titel."""
         for index, song in enumerate(self.songs):
             if song.title == title:
                 return index
         return -1
 
     def binary_search(self, title):
-        """Perform a binary search using the Red-Black Tree."""
+        """Binäre Suche mit dem Rot-Schwarz-Baum."""
         song_to_search = Song(title, "", "")
         return self.rbt.search(song_to_search)
 
     def sort_songs(self):
-        """Display sorting options and execute sorting."""
+        """Zeige Sortieroptionen und führe die gewählte Sortierung durch."""
         while True:
-            print("Choose sorting algorithm:")
+            print("Wähle einen Sortieralgorithmus:")
             print("1. Bubble Sort")
             print("2. Insertion Sort")
             print("3. Merge Sort")
             print("4. Quick Sort")
-            print("5. Back")
-            choice = input("Enter your choice: ").strip()
+            print("5. Zurück")
+            choice = input("Gib deine Wahl ein: ").strip()
 
             if choice == '1':
                 self._measure_sort_time(self.bubble_sort)
@@ -239,17 +239,17 @@ class MusicLibrary:
             elif choice == '5':
                 return
             else:
-                print("Invalid choice. Please try again.")
+                print("Ungültige Wahl. Bitte versuche es erneut.")
 
     def _measure_sort_time(self, sort_function):
-        """Measure and display the time taken by a sorting algorithm."""
+        """Messe und zeige die Zeit an, die für das Sortieren benötigt wird."""
         start_time = time.time()
         sort_function()
-        print(f"Time taken: {time.time() - start_time:.6f} seconds.")
+        print(f"Zeit benötigt: {time.time() - start_time:.6f} Sekunden.")
         self.save_songs()
 
     def bubble_sort(self):
-        """Bubble sort algorithm."""
+        """Bubble Sort Algorithmus."""
         n = len(self.songs)
         for i in range(n):
             swapped = False
@@ -259,10 +259,10 @@ class MusicLibrary:
                     swapped = True
             if not swapped:
                 break
-        print("Sorted using Bubble Sort.")
+        print("Sortiert mit Bubble Sort.")
 
     def insertion_sort(self):
-        """Insertion sort algorithm."""
+        """Insertion Sort Algorithmus."""
         for i in range(1, len(self.songs)):
             key_song = self.songs[i]
             j = i - 1
@@ -270,10 +270,10 @@ class MusicLibrary:
                 self.songs[j + 1] = self.songs[j]
                 j -= 1
             self.songs[j + 1] = key_song
-        print("Sorted using Insertion Sort.")
+        print("Sortiert mit Insertion Sort.")
 
     def merge_sort(self, array):
-        """Merge sort algorithm."""
+        """Merge Sort Algorithmus."""
         if len(array) <= 1:
             return array
 
@@ -283,7 +283,7 @@ class MusicLibrary:
         return self._merge(left_half, right_half)
 
     def _merge(self, left, right):
-        """Helper method to merge two arrays."""
+        """Hilfsmethode zum Mischen von zwei Arrays."""
         result = []
         i, j = 0, 0
 
@@ -300,14 +300,14 @@ class MusicLibrary:
         return result
 
     def quick_sort(self, low, high):
-        """Quick sort algorithm."""
+        """Quick Sort Algorithmus."""
         if low < high:
             pi = self._partition(low, high)
             self.quick_sort(low, pi - 1)
             self.quick_sort(pi + 1, high)
 
     def _partition(self, low, high):
-        """Partition function for quick sort."""
+        """Partition Methode für Quick Sort."""
         pivot = self.songs[high]
         i = low - 1
 
@@ -320,7 +320,7 @@ class MusicLibrary:
         return i + 1
 
     def create_random_songs(self, count):
-        """Create random songs."""
+        """Erstelle zufällige Lieder."""
         for _ in range(count):
             title = ''.join(random.choices(string.ascii_uppercase, k=random.randint(5, 10)))
             artist = ''.join(random.choices(string.ascii_uppercase, k=random.randint(5, 10)))
@@ -328,81 +328,81 @@ class MusicLibrary:
             self.add_song(title, artist, album)
 
 
-# Functions for menu management
+# Menüfunktionen
 
 def manage_songs(library):
-    """Manage songs in the library."""
+    """Verwalte Lieder in der Bibliothek."""
     while True:
-        print("\nManage Songs")
-        print("1. Display Songs")
-        print("2. Add Song")
-        print("3. Create Random Songs")
-        print("4. Delete Song")
-        print("5. Back")
-        choice = input("Choose an option: ")
+        print("\nVerwalte Lieder")
+        print("1. Zeige Lieder")
+        print("2. Lied hinzufügen")
+        print("3. Zufällige Lieder erstellen")
+        print("4. Lied löschen")
+        print("5. Zurück")
+        choice = input("Wähle eine Option: ")
 
         if choice == '1':
             library.display_songs()
         elif choice == '2':
-            title = input("Enter the song title: ")
-            artist = input("Enter the artist: ")
-            album = input("Enter the album: ")
+            title = input("Gib den Titel des Liedes ein: ")
+            artist = input("Gib den Künstler ein: ")
+            album = input("Gib das Album ein: ")
             library.add_song(title, artist, album)
         elif choice == '3':
-            count = int(input("Enter number of random songs to create: "))
+            count = int(input("Gib die Anzahl der zu erstellenden zufälligen Lieder ein: "))
             library.create_random_songs(count)
         elif choice == '4':
-            title = input("Enter the title of the song to delete: ")
+            title = input("Gib den Titel des zu löschenden Liedes ein: ")
             library.delete_song(title)
         elif choice == '5':
             break
         else:
-            print("Invalid option.")
+            print("Ungültige Option.")
 
 
 def search_songs(library):
-    """Search for songs in the library."""
+    """Suche nach Liedern in der Bibliothek."""
     while True:
-        print("\nSearch Songs")
-        print("1. Linear Search")
-        print("2. Binary Search")
-        print("3. Back")
-        choice = input("Choose an option: ")
+        print("\nSuche nach Liedern")
+        print("1. Lineare Suche")
+        print("2. Binäre Suche")
+        print("3. Zurück")
+        choice = input("Wähle eine Option: ")
 
         if choice == '1':
-            title = input("Enter the song title: ")
+            title = input("Gib den Titel des Liedes ein: ")
             result = library.linear_search(title)
             if result != -1:
-                print(f"'{library.songs[result]}' found at position {result + 1}.")
+                print(f"'{library.songs[result]}' an Position {result + 1} gefunden.")
             else:
-                print(f"'{title}' not found.")
+                print(f"'{title}' wurde nicht gefunden.")
         elif choice == '2':
-            title = input("Enter the song title: ")
+            title = input("Gib den Titel des Liedes ein: ")
             found = library.binary_search(title)
             if found:
-                print(f"'{title}' found in your music library.")
+                print(f"'{title}' in deiner Musikbibliothek gefunden.")
             else:
-                print(f"'{title}' not found.")
+                print(f"'{title}' wurde nicht gefunden.")
         elif choice == '3':
             break
         else:
-            print("Invalid option.")
+            print("Ungültige Option.")
 
 
-# Main function
+# Hauptprogramm
 
 def main():
-    """Main program to run the music library."""
+    """Hauptprogramm zur Ausführung der Musikbibliothek."""
     library = MusicLibrary()
-    print("Welcome to your Music Library")
+    print("Willkommen in deiner Musikbibliothek")
 
     while True:
-        print("\nMain Menu")
-        print("1. Manage Songs")
-        print("2. Search Songs")
-        print("3. Sort Songs")
-        print("4. Exit")
-        main_choice = input("Choose an option: ")
+        print("\nHauptmenü")
+        print("1. Lieder verwalten")
+        print("2. Nach Liedern suchen")
+        print("3. Lieder sortieren")
+        print("4. Beenden")
+        main_choice = input("Wähle eine Option: ")
 
         if main_choice == '1':
             manage_songs(library)
@@ -411,10 +411,10 @@ def main():
         elif main_choice == '3':
             library.sort_songs()
         elif main_choice == '4':
-            print("Exiting program.")
+            print("Programm wird beendet.")
             break
         else:
-            print("Invalid option. Please try again.")
+            print("Ungültige Option. Bitte versuche es erneut.")
 
 
 if __name__ == "__main__":
