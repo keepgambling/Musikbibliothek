@@ -217,30 +217,6 @@ class MusicLibrary:
         song_to_search = Song(title, "", "")
         return self.rbt.search(song_to_search)
 
-    def sort_songs(self):
-        """Zeige Sortieroptionen und führe die gewählte Sortierung durch."""
-        while True:
-            print("Wähle einen Sortieralgorithmus:")
-            print("1. Bubble Sort")
-            print("2. Insertion Sort")
-            print("3. Merge Sort")
-            print("4. Quick Sort")
-            print("5. Zurück")
-            choice = input("Gib deine Wahl ein: ").strip()
-
-            if choice == '1':
-                self._measure_sort_time(self.bubble_sort)
-            elif choice == '2':
-                self._measure_sort_time(self.insertion_sort)
-            elif choice == '3':
-                self._measure_sort_time(lambda: self.merge_sort(self.songs))
-            elif choice == '4':
-                self._measure_sort_time(lambda: self.quick_sort(0, len(self.songs) - 1))
-            elif choice == '5':
-                return
-            else:
-                print("Ungültige Wahl. Bitte versuche es erneut.")
-
     def _measure_sort_time(self, sort_function):
         """Messe und zeige die Zeit an, die für das Sortieren benötigt wird."""
         start_time = time.time()
@@ -330,7 +306,7 @@ class MusicLibrary:
 
 # Menüfunktionen
 
-def manage_songs(library):
+def manage_songs(library = MusicLibrary):
     """Verwalte Lieder in der Bibliothek."""
     while True:
         print("\nVerwalte Lieder")
@@ -359,8 +335,31 @@ def manage_songs(library):
         else:
             print("Ungültige Option.")
 
+def sort_songs(library = MusicLibrary):
+    """Zeige Sortieroptionen und führe die gewählte Sortierung durch."""
+    while True:
+        print("Wähle einen Sortieralgorithmus:")
+        print("1. Bubble Sort")
+        print("2. Insertion Sort")
+        print("3. Merge Sort")
+        print("4. Quick Sort")
+        print("5. Zurück")
+        choice = input("Gib deine Wahl ein: ").strip()
 
-def search_songs(library):
+        if choice == '1':
+            library._measure_sort_time(library.bubble_sort)
+        elif choice == '2':
+            library._measure_sort_time(library.insertion_sort)
+        elif choice == '3':
+            library._measure_sort_time(lambda: library.merge_sort(library.songs))
+        elif choice == '4':
+            library._measure_sort_time(lambda: library.quick_sort(0, len(library.songs) - 1))
+        elif choice == '5':
+            return
+        else:
+            print("Ungültige Wahl. Bitte versuche es erneut.")
+
+def search_songs(library = MusicLibrary):
     """Suche nach Liedern in der Bibliothek."""
     while True:
         print("\nSuche nach Liedern")
