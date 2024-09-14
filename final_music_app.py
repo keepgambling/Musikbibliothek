@@ -25,6 +25,7 @@ class Song:
         """Überprüfen, ob zwei Lieder gleich sind."""
         return self.title == other.title and self.artist == other.artist and self.album == other.album
 
+
 class RedBlackNode:
     """Knoten für Rot-Schwarz-Baum, der ein Lied und Zeiger auf Kinder und Eltern speichert."""
     def __init__(self, song):
@@ -33,6 +34,7 @@ class RedBlackNode:
         self.left = None
         self.right = None
         self.parent = None
+
 
 class RedBlackTree:
     """Rot-Schwarz-Baum-Implementierung zur Speicherung von Liedern."""
@@ -134,11 +136,8 @@ class RedBlackTree:
         x.parent = y
 
     def search(self, song):
-        """Suche nach einem Lied im Rot-Schwarz-Baum und messe die Laufzeit."""
-        start_time = time.time()
-        result = self._search_recursive(self.root, song)
-        print(f"Zeit für binäre Suche: {time.time() - start_time:.6f} Sekunden.")
-        return result
+        """Suche nach einem Lied im Rot-Schwarz-Baum."""
+        return self._search_recursive(self.root, song)
 
     def _search_recursive(self, node, song):
         """Hilfsmethode für die rekursive Suche."""
@@ -147,6 +146,7 @@ class RedBlackTree:
         if song < node.song:
             return self._search_recursive(node.left, song)
         return self._search_recursive(node.right, song)
+
 
 class MusicLibrary:
     """Musikbibliothek zur Verwaltung von Liedern."""
@@ -157,24 +157,75 @@ class MusicLibrary:
         self.rbt = RedBlackTree()
         self.load_songs()
 
+    def load_songs(self):
+        """Lade Lieder aus der Datei."""
+        if os.path.exists(self.FILENAME):
+            with open(self.FILENAME, 'r') as file:
+                for line in file:
+                    if line.strip():
+                        title, artist, album = line.strip().split(',')
+                        song = Song(title, artist, album)
+                        self.songs.append(song)
+                        self.rbt.insert(song)
+            print(f"{len(self.songs)} Lieder aus {self.FILENAME} geladen.")
+        else:
+            print("Keine Lieder gefunden. Beginne mit einer leeren Bibliothek.")
+
+    def save_songs(self):
+        """Speichere Lieder in eine Datei."""
+        with open(self.FILENAME, 'w') as file:
+            for song in self.songs:
+                file.write(f"{song.title},{song.artist},{song.album}\n")
+        print(f"{len(self.songs)} Lieder in {self.FILENAME} gespeichert.")
+
+    def add_song(self, title, artist, album):
+        """Füge ein neues Lied zur Bibliothek hinzu."""
+        song = Song(title, artist, album)
+        self.songs.append(song)
+        self.rbt.insert(song)
+        self.save_songs()
+        print(f"'{song}' wurde deiner Musikbibliothek hinzugefügt.")
+
+    def delete_song(self, title):
+        """Lösche ein Lied nach Titel."""
+        song_to_delete = next((s for s in self.songs if s.title == title), None)
+        if song_to_delete:
+            self.songs.remove(song_to_delete)
+            self.save_songs()
+            print(f"'{song_to_delete}' wurde aus deiner Musikbibliothek entfernt.")
+        else:
+            print(f"'{title}' wurde in deiner Musikbibliothek nicht gefunden.")
+
+    def display_songs(self):
+        """Zeige alle Lieder in der Bibliothek an."""
+        if self.songs:
+            print("Deine Musikbibliothek:")
+            for i, song in enumerate(self.songs, 1):
+                print(f"{i}. {song}")
+        else:
+            print("Deine Musikbibliothek ist leer.")
+
     def linear_search(self, title):
-        """Lineare Suche nach einem Titel mit Laufzeitmessung."""
-        start_time = time.time()
+        """Lineare Suche nach einem Titel."""
         for index, song in enumerate(self.songs):
             if song.title == title:
-                print(f"Zeit für lineare Suche: {time.time() - start_time:.6f} Sekunden.")
                 return index
-        print(f"Zeit für lineare Suche: {time.time() - start_time:.6f} Sekunden.")
         return -1
 
     def binary_search(self, title):
-        """Binäre Suche mit dem Rot-Schwarz-Baum und Laufzeitmessung."""
+        """Binäre Suche mit dem Rot-Schwarz-Baum."""
         song_to_search = Song(title, "", "")
         return self.rbt.search(song_to_search)
 
-    def bubble_sort(self):
-        """Bubble Sort Algorithmus mit Laufzeitmessung."""
+    def _measure_sort_time(self, sort_function):
+        """Messe und zeige die Zeit an, die für das Sortieren benötigt wird."""
         start_time = time.time()
+        sort_function()
+        print(f"Zeit benötigt: {time.time() - start_time:.6f} Sekunden.")
+        self.save_songs()
+
+    def bubble_sort(self):
+        """Bubble Sort Algorithmus."""
         n = len(self.songs)
         for i in range(n):
             swapped = False
@@ -184,11 +235,10 @@ class MusicLibrary:
                     swapped = True
             if not swapped:
                 break
-        print(f"Zeit für Bubble Sort: {time.time() - start_time:.6f} Sekunden.")
+        print("Sortiert mit Bubble Sort.")
 
     def insertion_sort(self):
-        """Insertion Sort Algorithmus mit Laufzeitmessung."""
-        start_time = time.time()
+        """Insertion Sort Algorithmus."""
         for i in range(1, len(self.songs)):
             key_song = self.songs[i]
             j = i - 1
@@ -196,23 +246,16 @@ class MusicLibrary:
                 self.songs[j + 1] = self.songs[j]
                 j -= 1
             self.songs[j + 1] = key_song
-        print(f"Zeit für Insertion Sort: {time.time() - start_time:.6f} Sekunden.")
+        print("Sortiert mit Insertion Sort.")
 
     def merge_sort(self, array):
-        """Merge Sort Algorithmus mit Laufzeitmessung."""
-        start_time = time.time()
-        sorted_array = self._merge_sort(array)
-        print(f"Zeit für Merge Sort: {time.time() - start_time:.6f} Sekunden.")
-        return sorted_array
-
-    def _merge_sort(self, array):
-        """Rekursive Merge Sort Methode."""
+        """Merge Sort Algorithmus."""
         if len(array) <= 1:
             return array
 
         mid = len(array) // 2
-        left_half = self._merge_sort(array[:mid])
-        right_half = self._merge_sort(array[mid:])
+        left_half = self.merge_sort(array[:mid])
+        right_half = self.merge_sort(array[mid:])
         return self._merge(left_half, right_half)
 
     def _merge(self, left, right):
@@ -233,17 +276,11 @@ class MusicLibrary:
         return result
 
     def quick_sort(self, low, high):
-        """Quick Sort Algorithmus mit Laufzeitmessung."""
-        start_time = time.time()
-        self._quick_sort_recursive(low, high)
-        print(f"Zeit für Quick Sort: {time.time() - start_time:.6f} Sekunden.")
-
-    def _quick_sort_recursive(self, low, high):
-        """Rekursive Quick Sort Methode."""
+        """Quick Sort Algorithmus."""
         if low < high:
             pi = self._partition(low, high)
-            self._quick_sort_recursive(low, pi - 1)
-            self._quick_sort_recursive(pi + 1, high)
+            self.quick_sort(low, pi - 1)
+            self.quick_sort(pi + 1, high)
 
     def _partition(self, low, high):
         """Partition Methode für Quick Sort."""
@@ -257,6 +294,15 @@ class MusicLibrary:
 
         self.songs[i + 1], self.songs[high] = self.songs[high], self.songs[i + 1]
         return i + 1
+
+    def create_random_songs(self, count):
+        """Erstelle zufällige Lieder."""
+        for _ in range(count):
+            title = ''.join(random.choices(string.ascii_uppercase, k=random.randint(5, 10)))
+            artist = ''.join(random.choices(string.ascii_uppercase, k=random.randint(5, 10)))
+            album = ''.join(random.choices(string.ascii_uppercase, k=random.randint(5, 10)))
+            self.add_song(title, artist, album)
+
 
 # Menüfunktionen
 
@@ -340,6 +386,7 @@ def search_songs(library = MusicLibrary):
             break
         else:
             print("Ungültige Option.")
+
 
 # Hauptprogramm
 
