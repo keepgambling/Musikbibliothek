@@ -136,8 +136,11 @@ class RedBlackTree:
         x.parent = y
 
     def search(self, song):
-        """Suche nach einem Lied im Rot-Schwarz-Baum."""
-        return self._search_recursive(self.root, song)
+        """Suche nach einem Lied im Rot-Schwarz-Baum und messe die Laufzeit."""
+        start_time = time.time()
+        result = self._search_recursive(self.root, song)
+        print(f"Zeit für binäre Suche: {time.time() - start_time:.6f} Sekunden.")
+        return result
 
     def _search_recursive(self, node, song):
         """Hilfsmethode für die rekursive Suche."""
@@ -206,10 +209,13 @@ class MusicLibrary:
             print("Deine Musikbibliothek ist leer.")
 
     def linear_search(self, title):
-        """Lineare Suche nach einem Titel."""
+        """Lineare Suche nach einem Titel mit Laufzeitmessung."""
+        start_time = time.time()
         for index, song in enumerate(self.songs):
             if song.title == title:
+                print(f"Zeit für lineare Suche: {time.time() - start_time:.6f} Sekunden.")
                 return index
+        print(f"Zeit für lineare Suche: {time.time() - start_time:.6f} Sekunden.")
         return -1
 
     def binary_search(self, title):
@@ -225,7 +231,8 @@ class MusicLibrary:
         self.save_songs()
 
     def bubble_sort(self):
-        """Bubble Sort Algorithmus."""
+        """Bubble Sort Algorithmus mit Laufzeitmessung."""
+        start_time = time.time()
         n = len(self.songs)
         for i in range(n):
             swapped = False
@@ -235,10 +242,11 @@ class MusicLibrary:
                     swapped = True
             if not swapped:
                 break
-        print("Sortiert mit Bubble Sort.")
+        print(f"Zeit für Bubble Sort: {time.time() - start_time:.6f} Sekunden.")
 
     def insertion_sort(self):
-        """Insertion Sort Algorithmus."""
+        """Insertion Sort Algorithmus mit Laufzeitmessung."""
+        start_time = time.time()
         for i in range(1, len(self.songs)):
             key_song = self.songs[i]
             j = i - 1
@@ -246,7 +254,7 @@ class MusicLibrary:
                 self.songs[j + 1] = self.songs[j]
                 j -= 1
             self.songs[j + 1] = key_song
-        print("Sortiert mit Insertion Sort.")
+        print(f"Zeit für Insertion Sort: {time.time() - start_time:.6f} Sekunden.")
 
     def merge_sort(self, array):
         """Merge Sort Algorithmus."""
