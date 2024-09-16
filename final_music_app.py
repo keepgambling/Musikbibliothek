@@ -223,6 +223,60 @@ class MusicLibrary:
         song_to_search = Song(title, "", "")
         return self.rbt.search(song_to_search)
 
+    def interpolation_search(self, title):
+        """Interpolation Search Algorithmus für eine sortierte Liste."""
+        low = 0
+        high = len(self.songs) - 1
+        while low <= high and title >= self.songs[low].title and title <= self.songs[high].title:
+            if low == high:
+                if self.songs[low].title == title:
+                    return low
+                return -1
+
+            # Interpolation Formel zur Schätzung der Position
+            pos = low + ((high - low) // (ord(self.songs[high].title[0]) - ord(self.songs[low].title[0])) *
+                         (ord(title[0]) - ord(self.songs[low].title[0])))
+
+            if self.songs[pos].title == title:
+                return pos
+            if self.songs[pos].title < title:
+                low = pos + 1
+            else:
+                high = pos - 1
+
+        return -1
+
+    def exponential_search(self, title):
+        """Exponential Search Algorithmus für eine sortierte Liste."""
+        if len(self.songs) == 0:
+            return -1
+
+        # Wenn das erste Element das gesuchte ist
+        if self.songs[0].title == title:
+            return 0
+
+        # Bestimmen des Bereichs für die binäre Suche
+        i = 1
+        while i < len(self.songs) and self.songs[i].title <= title:
+            i = i * 2
+
+        # Durchführung der binären Suche im gefundenen Bereich
+        return self._binary_search_in_range(title, i // 2, min(i, len(self.songs)))
+
+    def _binary_search_in_range(self, title, low, high):
+        """Binäre Suche in einem spezifischen Bereich."""
+        while low <= high:
+            mid = low + (high - low) // 2
+
+            if self.songs[mid].title == title:
+                return mid
+            elif self.songs[mid].title < title:
+                low = mid + 1
+            else:
+                high = mid - 1
+
+        return -1
+
     def _measure_sort_time(self, sort_function):
         """Messe und zeige die Zeit an, die für das Sortieren benötigt wird."""
         start_time = time.time()
@@ -373,7 +427,9 @@ def search_songs(library = MusicLibrary):
         print("\nSuche nach Liedern")
         print("1. Lineare Suche")
         print("2. Binäre Suche")
-        print("3. Zurück")
+        print("3. Interpolation Search")
+        print("4. Exponential Search")
+        print("5. Zurück")
         choice = input("Wähle eine Option: ")
 
         if choice == '1':
@@ -391,9 +447,24 @@ def search_songs(library = MusicLibrary):
             else:
                 print(f"'{title}' wurde nicht gefunden.")
         elif choice == '3':
+            title = input("Gib den Titel des Liedes ein: ")
+            result = library.interpolation_search(title)
+            if result != -1:
+                print(f"'{library.songs[result]}' an Position {result + 1} gefunden.")
+            else:
+                print(f"'{title}' wurde nicht gefunden.")
+        elif choice == '4':
+            title = input("Gib den Titel des Liedes ein: ")
+            result = library.exponential_search(title)
+            if result != -1:
+                print(f"'{library.songs[result]}' an Position {result + 1} gefunden.")
+            else:
+                print(f"'{title}' wurde nicht gefunden.")
+        elif choice == '5':
             break
         else:
             print("Ungültige Option.")
+
 
 
 # Hauptprogramm
