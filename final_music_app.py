@@ -465,8 +465,6 @@ def search_songs(library = MusicLibrary):
         else:
             print("Ungültige Option.")
 
-
-
 # Hauptprogramm
 
 def main():
@@ -493,7 +491,6 @@ def main():
             break
         else:
             print("Ungültige Option. Bitte versuche es erneut.")
-
 
 if __name__ == "__main__":
     main()
