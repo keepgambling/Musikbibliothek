@@ -326,6 +326,7 @@ class MusicLibrary:
         left_half = self.merge_sort(array[:mid])
         right_half = self.merge_sort(array[mid:])
         return self._merge(left_half, right_half)
+        
 
     def _merge(self, left, right):
         """Hilfsmethode zum Mischen von zwei Arrays."""
@@ -344,15 +345,18 @@ class MusicLibrary:
         result.extend(right[j:])
         return result
 
-    def quick_sort(self, low, high):
-        """Quick Sort Algorithmus mit Laufzeitmessung."""
-        start_time = time.time()
+    def quick_sort(self, low, high, measure_time=True):
+        """Quick Sort Algorithmus mit optionaler Laufzeitmessung."""
+        if measure_time:  # Start the time measurement if this is the first call
+            start_time = time.time()
+
         if low < high:
             pi = self._partition(low, high)
-            self.quick_sort(low, pi - 1)
-            self.quick_sort(pi + 1, high)
-        print(f"Zeit für Quick Sort: {time.time() - start_time:.6f} Sekunden.")
+            self.quick_sort(low, pi - 1, measure_time=False)  # Disable time measurement in recursion
+            self.quick_sort(pi + 1, high, measure_time=False)
 
+        if measure_time:  # End the time measurement when returning from the top-level call
+            print(f"Zeit für Quick Sort: {time.time() - start_time:.6f} Sekunden.")
 
     def _partition(self, low, high):
         """Partition Methode für Quick Sort."""
@@ -366,6 +370,8 @@ class MusicLibrary:
 
         self.songs[i + 1], self.songs[high] = self.songs[high], self.songs[i + 1]
         return i + 1
+
+
 
     def create_random_songs(self, count):
         """Erstelle zufällige Lieder."""
@@ -423,13 +429,16 @@ def sort_songs(library = MusicLibrary):
         elif choice == '2':
             library._measure_sort_time(library.insertion_sort)
         elif choice == '3':
-            library._measure_sort_time(lambda: library.merge_sort(library.songs))
+            sorted_songs = library.merge_sort(library.songs)
+            library.songs = sorted_songs
+            library._measure_sort_time(lambda: None)  # Zeit messen ohne weiteren Sortiervorgang
         elif choice == '4':
             library._measure_sort_time(lambda: library.quick_sort(0, len(library.songs) - 1))
         elif choice == '5':
             return
         else:
             print("Ungültige Wahl. Bitte versuche es erneut.")
+
 
 def search_songs(library = MusicLibrary):
     """Suche nach Liedern in der Bibliothek."""
