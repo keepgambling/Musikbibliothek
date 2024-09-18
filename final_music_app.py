@@ -224,44 +224,51 @@ class MusicLibrary:
         return self.rbt.search(song_to_search)
 
     def interpolation_search(self, title):
-        """Interpolation Search Algorithmus für eine sortierte Liste."""
+        """Interpolation Search Algorithmus für eine sortierte Liste mit Zeitmessung."""
+        start_time = time.time()
         low = 0
         high = len(self.songs) - 1
         while low <= high and title >= self.songs[low].title and title <= self.songs[high].title:
             if low == high:
                 if self.songs[low].title == title:
+                    print(f"Zeit für Interpolation Search: {time.time() - start_time:.6f} Sekunden.")
                     return low
                 return -1
 
-            # Interpolation Formel zur Schätzung der Position
             pos = low + ((high - low) // (ord(self.songs[high].title[0]) - ord(self.songs[low].title[0])) *
                          (ord(title[0]) - ord(self.songs[low].title[0])))
 
             if self.songs[pos].title == title:
+                print(f"Zeit für Interpolation Search: {time.time() - start_time:.6f} Sekunden.")
                 return pos
             if self.songs[pos].title < title:
                 low = pos + 1
             else:
                 high = pos - 1
 
+        print(f"Zeit für Interpolation Search: {time.time() - start_time:.6f} Sekunden.")
         return -1
 
+
     def exponential_search(self, title):
-        """Exponential Search Algorithmus für eine sortierte Liste."""
+        """Exponential Search Algorithmus für eine sortierte Liste mit Zeitmessung."""
+        start_time = time.time()
         if len(self.songs) == 0:
+            print(f"Zeit für Exponential Search: {time.time() - start_time:.6f} Sekunden.")
             return -1
 
-        # Wenn das erste Element das gesuchte ist
         if self.songs[0].title == title:
+            print(f"Zeit für Exponential Search: {time.time() - start_time:.6f} Sekunden.")
             return 0
 
-        # Bestimmen des Bereichs für die binäre Suche
         i = 1
         while i < len(self.songs) and self.songs[i].title <= title:
             i = i * 2
 
-        # Durchführung der binären Suche im gefundenen Bereich
-        return self._binary_search_in_range(title, i // 2, min(i, len(self.songs)))
+        result = self._binary_search_in_range(title, i // 2, min(i, len(self.songs)))
+        print(f"Zeit für Exponential Search: {time.time() - start_time:.6f} Sekunden.")
+        return result
+
 
     def _binary_search_in_range(self, title, low, high):
         """Binäre Suche in einem spezifischen Bereich."""
@@ -338,11 +345,14 @@ class MusicLibrary:
         return result
 
     def quick_sort(self, low, high):
-        """Quick Sort Algorithmus."""
+        """Quick Sort Algorithmus mit Laufzeitmessung."""
+        start_time = time.time()
         if low < high:
             pi = self._partition(low, high)
             self.quick_sort(low, pi - 1)
             self.quick_sort(pi + 1, high)
+        print(f"Zeit für Quick Sort: {time.time() - start_time:.6f} Sekunden.")
+
 
     def _partition(self, low, high):
         """Partition Methode für Quick Sort."""
