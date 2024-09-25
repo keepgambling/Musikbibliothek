@@ -317,8 +317,11 @@ class MusicLibrary:
             self.songs[j + 1] = key_song
         print(f"Zeit für Insertion Sort: {time.time() - start_time:.6f} Sekunden.")
 
-    def merge_sort(self, array):
-        """Merge Sort Algorithmus."""
+    def merge_sort(self, array=None):
+        """Merge Sort Algorithmus mit Laufzeitmessung."""
+        if array is None:
+            array = self.songs
+
         if len(array) <= 1:
             return array
 
@@ -326,7 +329,6 @@ class MusicLibrary:
         left_half = self.merge_sort(array[:mid])
         right_half = self.merge_sort(array[mid:])
         return self._merge(left_half, right_half)
-        
 
     def _merge(self, left, right):
         """Hilfsmethode zum Mischen von zwei Arrays."""
@@ -344,6 +346,14 @@ class MusicLibrary:
         result.extend(left[i:])
         result.extend(right[j:])
         return result
+
+    def sort_with_merge_sort(self):
+        """Führt Merge Sort durch und misst die Zeit."""
+        start_time = time.time()
+        self.songs = self.merge_sort()
+        print(f"Zeit für Merge Sort: {time.time() - start_time:.6f} Sekunden.")
+        self.save_songs()
+
 
     def heap_sort(self):
         """Heap Sort Algorithmus mit Laufzeitmessung."""
@@ -429,7 +439,7 @@ def sort_songs(library=MusicLibrary):
         print("1. Bubble Sort")
         print("2. Insertion Sort")
         print("3. Merge Sort")
-        print("4. Heap Sort")  
+        print("4. Heap Sort")
         print("5. Zurück")
         choice = input("Gib deine Wahl ein: ").strip()
 
@@ -438,11 +448,9 @@ def sort_songs(library=MusicLibrary):
         elif choice == '2':
             library._measure_sort_time(library.insertion_sort)
         elif choice == '3':
-            sorted_songs = library.merge_sort(library.songs)
-            library.songs = sorted_songs
-            library._measure_sort_time(lambda: None)
+            library.sort_with_merge_sort()
         elif choice == '4':
-            library._measure_sort_time(library.heap_sort)  # Nutze den Heap Sort
+            library._measure_sort_time(library.heap_sort)
         elif choice == '5':
             return
         else:
