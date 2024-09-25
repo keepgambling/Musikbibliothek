@@ -345,32 +345,41 @@ class MusicLibrary:
         result.extend(right[j:])
         return result
 
-    def quick_sort(self, low, high, measure_time=True):
-        """Quick Sort Algorithmus mit optionaler Laufzeitmessung."""
-        if measure_time:  # Start the time measurement if this is the first call
-            start_time = time.time()
+    def heap_sort(self):
+        """Heap Sort Algorithmus mit Laufzeitmessung."""
+        start_time = time.time()
+        n = len(self.songs)
 
-        if low < high:
-            pi = self._partition(low, high)
-            self.quick_sort(low, pi - 1, measure_time=False)  # Disable time measurement in recursion
-            self.quick_sort(pi + 1, high, measure_time=False)
+        # Erstelle einen Max-Heap
+        for i in range(n // 2 - 1, -1, -1):
+            self._heapify(n, i)
 
-        if measure_time:  # End the time measurement when returning from the top-level call
-            print(f"Zeit für Quick Sort: {time.time() - start_time:.6f} Sekunden.")
+        # Einzeln Elemente vom Heap entfernen
+        for i in range(n - 1, 0, -1):
+            self.songs[i], self.songs[0] = self.songs[0], self.songs[i]  # Tausche
+            self._heapify(i, 0)
 
-    def _partition(self, low, high):
-        """Partition Methode für Quick Sort."""
-        pivot = self.songs[high]
-        i = low - 1
+        print(f"Zeit für Heap Sort: {time.time() - start_time:.6f} Sekunden.")
 
-        for j in range(low, high):
-            if self.songs[j] < pivot:
-                i += 1
-                self.songs[i], self.songs[j] = self.songs[j], self.songs[i]
 
-        self.songs[i + 1], self.songs[high] = self.songs[high], self.songs[i + 1]
-        return i + 1
+    def _heapify(self, n, i):
+        """Hilfsmethode zur Umstrukturierung eines Heaps."""
+        largest = i
+        left = 2 * i + 1  # Linkes Kind
+        right = 2 * i + 2  # Rechtes Kind
 
+        # Wenn das linke Kind größer ist als der größte bisherige Wert
+        if left < n and self.songs[left] > self.songs[largest]:
+            largest = left
+
+        # Wenn das rechte Kind größer ist als der größte bisherige Wert
+        if right < n and self.songs[right] > self.songs[largest]:
+            largest = right
+
+        # Wenn der größte Wert nicht die Wurzel ist
+        if largest != i:
+            self.songs[i], self.songs[largest] = self.songs[largest], self.songs[i]  # Tausche
+            self._heapify(n, largest)
 
 
     def create_random_songs(self, count):
@@ -413,14 +422,14 @@ def manage_songs(library = MusicLibrary):
         else:
             print("Ungültige Option.")
 
-def sort_songs(library = MusicLibrary):
+def sort_songs(library=MusicLibrary):
     """Zeige Sortieroptionen und führe die gewählte Sortierung durch."""
     while True:
         print("Wähle einen Sortieralgorithmus:")
         print("1. Bubble Sort")
         print("2. Insertion Sort")
         print("3. Merge Sort")
-        print("4. Quick Sort")
+        print("4. Heap Sort")  
         print("5. Zurück")
         choice = input("Gib deine Wahl ein: ").strip()
 
@@ -431,9 +440,9 @@ def sort_songs(library = MusicLibrary):
         elif choice == '3':
             sorted_songs = library.merge_sort(library.songs)
             library.songs = sorted_songs
-            library._measure_sort_time(lambda: None)  # Zeit messen ohne weiteren Sortiervorgang
+            library._measure_sort_time(lambda: None)
         elif choice == '4':
-            library._measure_sort_time(lambda: library.quick_sort(0, len(library.songs) - 1))
+            library._measure_sort_time(library.heap_sort)  # Nutze den Heap Sort
         elif choice == '5':
             return
         else:
