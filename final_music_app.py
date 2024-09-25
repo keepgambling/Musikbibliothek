@@ -228,19 +228,26 @@ class MusicLibrary:
         start_time = time.time()
         low = 0
         high = len(self.songs) - 1
+
         while low <= high and title >= self.songs[low].title and title <= self.songs[high].title:
-            if low == high:
+            # Vermeide Division durch Null
+            if self.songs[high].title == self.songs[low].title:
                 if self.songs[low].title == title:
                     print(f"Zeit für Interpolation Search: {time.time() - start_time:.6f} Sekunden.")
                     return low
-                return -1
+                else:
+                    break
 
-            pos = low + ((high - low) // (ord(self.songs[high].title[0]) - ord(self.songs[low].title[0])) *
-                         (ord(title[0]) - ord(self.songs[low].title[0])))
+            # Berechne die Position mit der Interpolationsformel
+            pos = low + ((ord(title[0]) - ord(self.songs[low].title[0])) * (high - low) // 
+                        (ord(self.songs[high].title[0]) - ord(self.songs[low].title[0])))
 
+            # Überprüfe, ob das Lied gefunden wurde
             if self.songs[pos].title == title:
                 print(f"Zeit für Interpolation Search: {time.time() - start_time:.6f} Sekunden.")
                 return pos
+
+            # Anpassen der Suchbereiche
             if self.songs[pos].title < title:
                 low = pos + 1
             else:
@@ -252,19 +259,23 @@ class MusicLibrary:
     def exponential_search(self, title):
         """Exponential Search Algorithmus für eine sortierte Liste mit Zeitmessung."""
         start_time = time.time()
+
         if len(self.songs) == 0:
             print(f"Zeit für Exponential Search: {time.time() - start_time:.6f} Sekunden.")
             return -1
 
+        # Prüfe, ob das erste Element das gesuchte ist
         if self.songs[0].title == title:
             print(f"Zeit für Exponential Search: {time.time() - start_time:.6f} Sekunden.")
             return 0
 
+        # Finde den Bereich mit exponentieller Suche
         i = 1
         while i < len(self.songs) and self.songs[i].title <= title:
             i = i * 2
 
-        result = self._binary_search_in_range(title, i // 2, min(i, len(self.songs)))
+        # Führe binäre Suche im gefundenen Bereich durch
+        result = self._binary_search_in_range(title, i // 2, min(i, len(self.songs) - 1))
         print(f"Zeit für Exponential Search: {time.time() - start_time:.6f} Sekunden.")
         return result
 
