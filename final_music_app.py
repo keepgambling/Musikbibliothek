@@ -136,11 +136,8 @@ class RedBlackTree:
         x.parent = y
 
     def search(self, song):
-        """Suche nach einem Lied im Rot-Schwarz-Baum und messe die Laufzeit."""
-        start_time = time.time()
+        """Suche nach einem Lied im Rot-Schwarz-Baum."""
         result = self._search_recursive(self.root, song)
-        print(f"Zeit für binäre Suche: {time.time() - start_time:.6f} Sekunden.")
-        return result
 
     def _search_recursive(self, node, song):
         """Hilfsmethode für die rekursive Suche."""
@@ -210,7 +207,7 @@ class MusicLibrary:
 
     def linear_search(self, title):
         """Lineare Suche nach einem Titel mit Laufzeitmessung."""
-        start_time = time.time()
+        start_time = time.time()  
         for index, song in enumerate(self.songs):
             if song.title == title:
                 print(f"Zeit für lineare Suche: {time.time() - start_time:.6f} Sekunden.")
@@ -220,8 +217,11 @@ class MusicLibrary:
 
     def binary_search(self, title):
         """Binäre Suche mit dem Rot-Schwarz-Baum."""
+        start_time = time.time()  
         song_to_search = Song(title, "", "")
-        return self.rbt.search(song_to_search)
+        found = self.rbt.search(song_to_search)
+        print(f"Zeit für binäre Suche: {time.time() - start_time:.6f} Sekunden.")
+        return found
 
     def interpolation_search(self, title):
         """Interpolation Search Algorithmus für eine sortierte Liste mit Zeitmessung."""
@@ -249,7 +249,6 @@ class MusicLibrary:
         print(f"Zeit für Interpolation Search: {time.time() - start_time:.6f} Sekunden.")
         return -1
 
-
     def exponential_search(self, title):
         """Exponential Search Algorithmus für eine sortierte Liste mit Zeitmessung."""
         start_time = time.time()
@@ -268,7 +267,6 @@ class MusicLibrary:
         result = self._binary_search_in_range(title, i // 2, min(i, len(self.songs)))
         print(f"Zeit für Exponential Search: {time.time() - start_time:.6f} Sekunden.")
         return result
-
 
     def _binary_search_in_range(self, title, low, high):
         """Binäre Suche in einem spezifischen Bereich."""
@@ -371,7 +369,6 @@ class MusicLibrary:
 
         print(f"Zeit für Heap Sort: {time.time() - start_time:.6f} Sekunden.")
 
-
     def _heapify(self, n, i):
         """Hilfsmethode zur Umstrukturierung eines Heaps."""
         largest = i
@@ -390,7 +387,6 @@ class MusicLibrary:
         if largest != i:
             self.songs[i], self.songs[largest] = self.songs[largest], self.songs[i]  # Tausche
             self._heapify(n, largest)
-
 
     def create_random_songs(self, count):
         """Erstelle zufällige Lieder."""
@@ -455,7 +451,6 @@ def sort_songs(library=MusicLibrary):
             return
         else:
             print("Ungültige Wahl. Bitte versuche es erneut.")
-
 
 def search_songs(library = MusicLibrary):
     """Suche nach Liedern in der Bibliothek."""
