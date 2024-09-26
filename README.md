@@ -150,7 +150,7 @@ Big-O-Notation der Algorithmen erläutert.
 ## Sortieren von 50.000 Elementen
 
 ### Insertion Sort
-![Insertion Sort 50000](https://github.com/keepgambling/Musikbibliothek/Screenshots/Screenshot Insertion Sort 50000.png?raw=true)
+![Insertion Sort 50000](https://github.com/keepgambling/Musikbibliothek/Screenshots/ScreenshotInsertionSort50000.png?raw=true)
 - **Big-O-Notation:** O(n²)
 
 ### Merge Sort
