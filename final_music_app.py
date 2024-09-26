@@ -290,6 +290,7 @@ class MusicLibrary:
                     swapped = True
             if not swapped:
                 break
+        self.save_songs()
 
     def insertion_sort(self):
         """Insertion Sort Algorithmus mit Laufzeitmessung."""
@@ -300,6 +301,7 @@ class MusicLibrary:
                 self.songs[j + 1] = self.songs[j]
                 j -= 1
             self.songs[j + 1] = key_song
+        self.save_songs()
 
     def merge_sort(self, array=None):
         """Merge Sort Algorithmus mit Laufzeitmessung."""
@@ -336,38 +338,32 @@ class MusicLibrary:
         self.songs = self.merge_sort()
         self.save_songs()
 
-
     def heap_sort(self):
         """Heap Sort Algorithmus mit Laufzeitmessung."""
         n = len(self.songs)
 
-        # Erstelle einen Max-Heap
         for i in range(n // 2 - 1, -1, -1):
             self._heapify(n, i)
 
-        # Einzeln Elemente vom Heap entfernen
         for i in range(n - 1, 0, -1):
-            self.songs[i], self.songs[0] = self.songs[0], self.songs[i]  # Tausche
+            self.songs[i], self.songs[0] = self.songs[0], self.songs[i]
             self._heapify(i, 0)
-
+        self.save_songs()
 
     def _heapify(self, n, i):
         """Hilfsmethode zur Umstrukturierung eines Heaps."""
         largest = i
-        left = 2 * i + 1  # Linkes Kind
-        right = 2 * i + 2  # Rechtes Kind
+        left = 2 * i + 1
+        right = 2 * i + 2
 
-        # Wenn das linke Kind größer ist als der größte bisherige Wert
         if left < n and self.songs[left] > self.songs[largest]:
             largest = left
 
-        # Wenn das rechte Kind größer ist als der größte bisherige Wert
         if right < n and self.songs[right] > self.songs[largest]:
             largest = right
 
-        # Wenn der größte Wert nicht die Wurzel ist
         if largest != i:
-            self.songs[i], self.songs[largest] = self.songs[largest], self.songs[i]  # Tausche
+            self.songs[i], self.songs[largest] = self.songs[largest], self.songs[i]
             self._heapify(n, largest)
 
     def create_random_songs(self, count):
