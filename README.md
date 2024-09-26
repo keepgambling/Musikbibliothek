@@ -9,7 +9,7 @@ Dieses Projekt implementiert eine **Musikbibliothek**, die eine effiziente Verwa
   - [Song](#song)
   - [RedBlackTree](#redblacktree)
   - [MusicLibrary](#musiclibrary)
-- [Menü-Funktionen](#funktionen)
+- [Menü-Funktionen](#menü-funktionen)
   - [manage_songs](#manage_songs)
   - [sort_songs](#sort_songs)
   - [search_songs](#search_songs)
@@ -17,6 +17,7 @@ Dieses Projekt implementiert eine **Musikbibliothek**, die eine effiziente Verwa
 - [Vorgehen](#vorgehen)
 - [Komplexität (Big-O-Notation)](#komplexität-big-o-notation)
 - [Herausforderungen](#herausforderungen)
+
 
 ---
 
@@ -149,37 +150,37 @@ Big-O-Notation der Algorithmen erläutert.
 ## Sortieren von 50.000 Elementen
 
 ### Insertion Sort
-![Insertion Sort 50000](path/to/Screenshot Insertion Sort 50000.png)
+![Insertion Sort 50000](Screenshots/Screenshot Insertion Sort 50000.png)
 - **Big-O-Notation:** O(n²)
 
 ### Merge Sort
-![Merge Sort 50000](path/to/Screenshot Merge Sort 50000.png)
+![Merge Sort 50000](Screenshots/Screenshot Merge Sort 50000.png)
 - **Big-O-Notation:** O(n log n)
 
 ### Heap Sort
-![Heap Sort 50000](path/to/Screenshot Heap sort 50000.png)
+![Heap Sort 50000](Screenshots/Screenshot Heap sort 50000.png)
 - **Big-O-Notation:** O(n log n)
 
 ### Bubble Sort
-![Bubble Sort 50000](path/to/Screenshot Bubble Sort 50000.png)
+![Bubble Sort 50000](Screenshots/Screenshot Bubble Sort 50000.png)
 - **Big-O-Notation:** O(n²)
 
 ## Sortieren von 10.000 Elementen
 
 ### Insertion Sort
-![Insertion Sort 10000](path/to/Screenshot Insertion Sort.png)
+![Insertion Sort 10000](Screenshots/Screenshot Insertion Sort.png)
 - **Big-O-Notation:** O(n²)
 
 ### Merge Sort
-![Merge Sort 10000](path/to/Screenshot Merge sort.png)
+![Merge Sort 10000](Screenshots/Screenshot Merge sort.png)
 - **Big-O-Notation:** O(n log n)
 
 ### Heap Sort
-![Heap Sort 10000](path/to/Screenshot Heap sort.png)
+![Heap Sort 10000](Screenshots/Screenshot Heap sort.png)
 - **Big-O-Notation:** O(n log n)
 
 ### Bubble Sort
-![Bubble Sort 10000](path/to/Screenshot Bubble_sort.png)
+![Bubble Sort 10000](Screenshots/Screenshot Bubble_sort.png)
 - **Big-O-Notation:** O(n²)
 
 Big-O-Notationen der angegebenen Suchalgorithmen:
