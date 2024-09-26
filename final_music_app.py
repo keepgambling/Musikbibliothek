@@ -50,6 +50,11 @@ class RedBlackTree:
         parent = None
         current = self.root
 
+        if self.root == self.NIL:
+            self.root = new_node
+            new_node.color = "BLACK"
+            return
+
         while current != self.NIL:
             parent = current
             if new_node.song < current.song:
@@ -59,14 +64,13 @@ class RedBlackTree:
 
         new_node.parent = parent
 
-        if parent is None:
-            self.root = new_node
-        elif new_node.song < parent.song:
+        if new_node.song < parent.song:
             parent.left = new_node
         else:
             parent.right = new_node
 
         self.fix_insert(new_node)
+
 
     def fix_insert(self, node):
         """Korrigiere den Rot-Schwarz-Baum nach dem Einfügen."""
@@ -161,17 +165,21 @@ class MusicLibrary:
 
     def load_songs(self):
         """Lade Lieder aus der Datei."""
-        if os.path.exists(self.FILENAME):
-            with open(self.FILENAME, 'r') as file:
-                for line in file:
-                    if line.strip():
-                        title, artist, album = line.strip().split(',')
-                        song = Song(title, artist, album)
-                        self.songs.append(song)
-                        self.rbt.insert(song)
-            print(f"{len(self.songs)} Lieder aus {self.FILENAME} geladen.")
-        else:
-            print("Keine Lieder gefunden. Beginne mit einer leeren Bibliothek.")
+        try:
+            if os.path.exists(self.FILENAME):
+                with open(self.FILENAME, 'r') as file:
+                    for line in file:
+                        if line.strip():
+                            title, artist, album = line.strip().split(',')
+                            song = Song(title, artist, album)
+                            self.songs.append(song)
+                            self.rbt.insert(song)
+                print(f"{len(self.songs)} Lieder aus {self.FILENAME} geladen.")
+            else:
+                print("Keine Lieder gefunden. Beginne mit einer leeren Bibliothek.")
+        except Exception as e:
+            print(f"Fehler beim Laden der Songs: {e}")
+
 
     def save_songs(self):
         """Speichere Lieder in eine Datei."""
@@ -251,7 +259,6 @@ class MusicLibrary:
 
     def exponential_search(self, title):
         """Exponential Search Algorithmus für eine sortierte Liste mit Zeitmessung."""
-
         if len(self.songs) == 0:
             return -1
 
@@ -265,8 +272,8 @@ class MusicLibrary:
             i = i * 2
 
         # Führe binäre Suche im gefundenen Bereich durch
-        result = self._binary_search_in_range(title, i // 2, min(i, len(self.songs) - 1))
-        return result
+        return self._binary_search_in_range(title, i // 2, min(i, len(self.songs) - 1))
+
 
     def _binary_search_in_range(self, title, low, high):
         """Binäre Suche in einem spezifischen Bereich."""
@@ -397,13 +404,19 @@ class MusicLibrary:
 
     def add_favorite(self, title):
         """Füge ein Lied zu den Favoriten hinzu, wenn es in der Bibliothek vorhanden ist."""
-        song_to_add = next((s for s in self.songs if s.title == title), None)
-        if song_to_add and song_to_add not in self.favorites:
-            self.favorites.append(song_to_add)
-            self.save_favorites()
-            print(f"'{song_to_add}' wurde zu deinen Favoriten hinzugefügt.")
-        else:
-            print(f"'{title}' wurde nicht in deiner Musikbibliothek gefunden oder ist bereits ein Favorit.")
+        try:
+            song_to_add = next((s for s in self.songs if s.title == title), None)
+            if song_to_add and song_to_add not in self.favorites:
+                self.favorites.append(song_to_add)
+                self.save_favorites()
+                print(f"'{song_to_add}' wurde zu deinen Favoriten hinzugefügt.")
+            elif song_to_add in self.favorites:
+                print(f"'{title}' ist bereits in den Favoriten.")
+            else:
+                print(f"'{title}' wurde nicht in deiner Musikbibliothek gefunden.")
+        except Exception as e:
+            print(f"Fehler beim Hinzufügen zu Favoriten: {e}")
+
 
     def remove_favorite(self, title):
         """Entferne ein Lied aus den Favoriten."""
