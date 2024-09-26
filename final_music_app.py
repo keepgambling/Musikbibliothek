@@ -1,5 +1,4 @@
 import os
-import time
 import random
 import string
 
@@ -207,25 +206,19 @@ class MusicLibrary:
 
     def linear_search(self, title):
         """Lineare Suche nach einem Titel mit Laufzeitmessung."""
-        start_time = time.time()  
         for index, song in enumerate(self.songs):
             if song.title == title:
-                print(f"Zeit für lineare Suche: {time.time() - start_time:.6f} Sekunden.")
                 return index
-        print(f"Zeit für lineare Suche: {time.time() - start_time:.6f} Sekunden.")
         return -1
 
     def binary_search(self, title):
         """Binäre Suche mit dem Rot-Schwarz-Baum."""
-        start_time = time.time()  
         song_to_search = Song(title, "", "")
         found = self.rbt.search(song_to_search)
-        print(f"Zeit für binäre Suche: {time.time() - start_time:.6f} Sekunden.")
         return found
 
     def interpolation_search(self, title):
         """Interpolation Search Algorithmus für eine sortierte Liste mit Zeitmessung."""
-        start_time = time.time()
         low = 0
         high = len(self.songs) - 1
 
@@ -233,7 +226,6 @@ class MusicLibrary:
             # Vermeide Division durch Null
             if self.songs[high].title == self.songs[low].title:
                 if self.songs[low].title == title:
-                    print(f"Zeit für Interpolation Search: {time.time() - start_time:.6f} Sekunden.")
                     return low
                 else:
                     break
@@ -244,7 +236,6 @@ class MusicLibrary:
 
             # Überprüfe, ob das Lied gefunden wurde
             if self.songs[pos].title == title:
-                print(f"Zeit für Interpolation Search: {time.time() - start_time:.6f} Sekunden.")
                 return pos
 
             # Anpassen der Suchbereiche
@@ -253,20 +244,16 @@ class MusicLibrary:
             else:
                 high = pos - 1
 
-        print(f"Zeit für Interpolation Search: {time.time() - start_time:.6f} Sekunden.")
         return -1
 
     def exponential_search(self, title):
         """Exponential Search Algorithmus für eine sortierte Liste mit Zeitmessung."""
-        start_time = time.time()
 
         if len(self.songs) == 0:
-            print(f"Zeit für Exponential Search: {time.time() - start_time:.6f} Sekunden.")
             return -1
 
         # Prüfe, ob das erste Element das gesuchte ist
         if self.songs[0].title == title:
-            print(f"Zeit für Exponential Search: {time.time() - start_time:.6f} Sekunden.")
             return 0
 
         # Finde den Bereich mit exponentieller Suche
@@ -276,7 +263,6 @@ class MusicLibrary:
 
         # Führe binäre Suche im gefundenen Bereich durch
         result = self._binary_search_in_range(title, i // 2, min(i, len(self.songs) - 1))
-        print(f"Zeit für Exponential Search: {time.time() - start_time:.6f} Sekunden.")
         return result
 
     def _binary_search_in_range(self, title, low, high):
@@ -293,16 +279,8 @@ class MusicLibrary:
 
         return -1
 
-    def _measure_sort_time(self, sort_function):
-        """Messe und zeige die Zeit an, die für das Sortieren benötigt wird."""
-        start_time = time.time()
-        sort_function()
-        print(f"Zeit benötigt: {time.time() - start_time:.6f} Sekunden.")
-        self.save_songs()
-
     def bubble_sort(self):
         """Bubble Sort Algorithmus mit Laufzeitmessung."""
-        start_time = time.time()
         n = len(self.songs)
         for i in range(n):
             swapped = False
@@ -312,11 +290,9 @@ class MusicLibrary:
                     swapped = True
             if not swapped:
                 break
-        print(f"Zeit für Bubble Sort: {time.time() - start_time:.6f} Sekunden.")
 
     def insertion_sort(self):
         """Insertion Sort Algorithmus mit Laufzeitmessung."""
-        start_time = time.time()
         for i in range(1, len(self.songs)):
             key_song = self.songs[i]
             j = i - 1
@@ -324,7 +300,6 @@ class MusicLibrary:
                 self.songs[j + 1] = self.songs[j]
                 j -= 1
             self.songs[j + 1] = key_song
-        print(f"Zeit für Insertion Sort: {time.time() - start_time:.6f} Sekunden.")
 
     def merge_sort(self, array=None):
         """Merge Sort Algorithmus mit Laufzeitmessung."""
@@ -358,15 +333,12 @@ class MusicLibrary:
 
     def sort_with_merge_sort(self):
         """Führt Merge Sort durch und misst die Zeit."""
-        start_time = time.time()
         self.songs = self.merge_sort()
-        print(f"Zeit für Merge Sort: {time.time() - start_time:.6f} Sekunden.")
         self.save_songs()
 
 
     def heap_sort(self):
         """Heap Sort Algorithmus mit Laufzeitmessung."""
-        start_time = time.time()
         n = len(self.songs)
 
         # Erstelle einen Max-Heap
@@ -378,7 +350,6 @@ class MusicLibrary:
             self.songs[i], self.songs[0] = self.songs[0], self.songs[i]  # Tausche
             self._heapify(i, 0)
 
-        print(f"Zeit für Heap Sort: {time.time() - start_time:.6f} Sekunden.")
 
     def _heapify(self, n, i):
         """Hilfsmethode zur Umstrukturierung eines Heaps."""
@@ -451,13 +422,13 @@ def sort_songs(library=MusicLibrary):
         choice = input("Gib deine Wahl ein: ").strip()
 
         if choice == '1':
-            library._measure_sort_time(library.bubble_sort)
+            library.bubble_sort()
         elif choice == '2':
-            library._measure_sort_time(library.insertion_sort)
+            library.insertion_sort()
         elif choice == '3':
             library.sort_with_merge_sort()
         elif choice == '4':
-            library._measure_sort_time(library.heap_sort)
+            library.heap_sort()
         elif choice == '5':
             return
         else:
