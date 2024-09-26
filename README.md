@@ -1,4 +1,4 @@
-# Musikbibliothek - Dokumentation
+# Musikbibliothek
 
 Dieses Projekt implementiert eine **Musikbibliothek**, die eine effiziente Verwaltung, Suche und Sortierung von Liedern ermöglicht. Der Kern des Systems basiert auf einem **Rot-Schwarz-Baum**, um Lieder schnell und speicheroptimiert zu speichern und abzurufen. Außerdem stehen dem Benutzer mehrere Sortier- und Suchalgorithmen zur Verfügung, um verschiedene Anwendungsfälle zu unterstützen.
 
