@@ -17,7 +17,6 @@ Dieses Projekt implementiert eine **Musikbibliothek**, die eine effiziente Verwa
 - [Vorgehen](#vorgehen)
 - [Komplexität (Big-O-Notation)](#komplexität-big-o-notation)
 - [Herausforderungen](#herausforderungen)
-- [Zukünftige Erweiterungen](#zukünftige-erweiterungen)
 
 ---
 
