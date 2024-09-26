@@ -482,42 +482,42 @@ def sort_songs(library=MusicLibrary):
     """Zeige Sortieroptionen und führe die gewählte Sortierung durch."""
     while True:
         print_menu("Wähle einen Sortieralgorithmus", [
-            "Bubble Sort",
             "Insertion Sort",
             "Merge Sort",
             "Heap Sort",
+            "Bubble Sort",
             "Zurück"
         ])
         choice = input("Gib deine Wahl ein: ").strip()
 
         if choice == '1':
-            library.bubble_sort()
-        elif choice == '2':
             library.insertion_sort()
-        elif choice == '3':
+        elif choice == '2':
             library.sort_with_merge_sort()
-        elif choice == '4':
+        elif choice == '3':
             library.heap_sort()
+        elif choice == '4':
+            library.bubble_sort()
         elif choice == '5':
             return
         else:
             print("Ungültige Wahl. Bitte versuche es erneut.")
 
 def search_songs(library=MusicLibrary):
-    """Suche nach Liedern in der Bibliothek."""
+    """Suche nach Liedern in der Bibliothek, geordnet nach Geschwindigkeit."""
     while True:
         print_menu("Suche nach Liedern", [
-            "Lineare Suche",
-            "Binäre Suche",
-            "Interpolation Search",
             "Exponential Search",
+            "Binäre Suche",            
+            "Interpolation Search",    
+            "Lineare Suche",           
             "Zurück"
         ])
         choice = input("Wähle eine Option: ")
 
         if choice == '1':
             title = input("Gib den Titel des Liedes ein: ")
-            result = library.linear_search(title)
+            result = library.exponential_search(title)
             if result != -1:
                 print(f"'{library.songs[result]}' an Position {result + 1} gefunden.")
             else:
@@ -538,7 +538,7 @@ def search_songs(library=MusicLibrary):
                 print(f"'{title}' wurde nicht gefunden.")
         elif choice == '4':
             title = input("Gib den Titel des Liedes ein: ")
-            result = library.exponential_search(title)
+            result = library.linear_search(title)
             if result != -1:
                 print(f"'{library.songs[result]}' an Position {result + 1} gefunden.")
             else:
