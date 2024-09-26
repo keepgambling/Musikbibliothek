@@ -144,6 +144,59 @@ Nachdem die Algorithmen getestet und optimiert waren, wurde das Menü der Anwend
 
 ## Komplexität (Big-O-Notation)
 
+Im Folgenden werden die gemessenen Laufzeiten der getesteten Algorithmen gegenübergestellt, die zur Sortierung der Algorithmen im Skript geführt haben. Anschließend wird die
+Big-O-Notation der Algorithmen erläutert.
+
+## Sortieren von 50.000 Elementen
+
+### Insertion Sort
+![Insertion Sort 50000](path/to/Screenshot Insertion Sort 50000.png)
+- **Big-O-Notation:** O(n²)
+
+### Merge Sort
+![Merge Sort 50000](path/to/Screenshot Merge Sort 50000.png)
+- **Big-O-Notation:** O(n log n)
+
+### Heap Sort
+![Heap Sort 50000](path/to/Screenshot Heap sort 50000.png)
+- **Big-O-Notation:** O(n log n)
+
+### Bubble Sort
+![Bubble Sort 50000](path/to/Screenshot Bubble Sort 50000.png)
+- **Big-O-Notation:** O(n²)
+
+## Sortieren von 10.000 Elementen
+
+### Insertion Sort
+![Insertion Sort 10000](path/to/Screenshot Insertion Sort.png)
+- **Big-O-Notation:** O(n²)
+
+### Merge Sort
+![Merge Sort 10000](path/to/Screenshot Merge sort.png)
+- **Big-O-Notation:** O(n log n)
+
+### Heap Sort
+![Heap Sort 10000](path/to/Screenshot Heap sort.png)
+- **Big-O-Notation:** O(n log n)
+
+### Bubble Sort
+![Bubble Sort 10000](path/to/Screenshot Bubble_sort.png)
+- **Big-O-Notation:** O(n²)
+
+Big-O-Notationen der angegebenen Suchalgorithmen:
+
+- **Exponential Search**: O(log n) für den binären Suchteil (nachdem der Bereich eingegrenzt wurde)
+  - Wird verwendet, um effizient in einem exponentiell wachsenden Bereich zu suchen, und nutzt binäre Suche, sobald ein Bereich gefunden wurde.
+
+- **Binäre Suche (Binary Search)**: O(log n)
+  - Funktioniert nur auf sortierten Daten. Teilt das Suchfeld bei jedem Schritt in der Mitte und sucht in einer der Hälften weiter.
+
+- **Interpolation Search**: O(log log n) im besten Fall, O(n) im schlechtesten Fall
+  - Eine optimierte Suche für gleichmäßig verteilte Daten, die die Position der mittleren Zahl schätzt und basierend auf dieser Schätzung sucht.
+
+- **Lineare Suche (Linear Search)**: O(n)
+  - Durchsucht das Array elementweise von Anfang bis Ende, bis der gesuchte Wert gefunden wird.
+
 
 ---
 
