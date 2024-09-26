@@ -150,11 +150,14 @@ class RedBlackTree:
 class MusicLibrary:
     """Musikbibliothek zur Verwaltung von Liedern."""
     FILENAME = "songs.csv"
+    FAVORITES_FILENAME = "favoriten.csv"
 
     def __init__(self):
         self.songs = []
+        self.favorites = []
         self.rbt = RedBlackTree()
         self.load_songs()
+        self.load_favorites()
 
     def load_songs(self):
         """Lade Lieder aus der Datei."""
@@ -374,6 +377,52 @@ class MusicLibrary:
             album = ''.join(random.choices(string.ascii_uppercase, k=random.randint(5, 10)))
             self.add_song(title, artist, album)
 
+    def load_favorites(self):
+        """Lade Favoriten aus der Datei."""
+        if os.path.exists(self.FAVORITES_FILENAME):
+            with open(self.FAVORITES_FILENAME, 'r') as file:
+                for line in file:
+                    if line.strip():
+                        title, artist, album = line.strip().split(',')
+                        song = Song(title, artist, album)
+                        self.favorites.append(song)
+            print(f"{len(self.favorites)} Favoriten aus {self.FAVORITES_FILENAME} geladen.")
+
+    def save_favorites(self):
+        """Speichere Favoriten in eine Datei."""
+        with open(self.FAVORITES_FILENAME, 'w') as file:
+            for song in self.favorites:
+                file.write(f"{song.title},{song.artist},{song.album}\n")
+        print(f"{len(self.favorites)} Favoriten in {self.FAVORITES_FILENAME} gespeichert.")
+
+    def add_favorite(self, title):
+        """Füge ein Lied zu den Favoriten hinzu, wenn es in der Bibliothek vorhanden ist."""
+        song_to_add = next((s for s in self.songs if s.title == title), None)
+        if song_to_add and song_to_add not in self.favorites:
+            self.favorites.append(song_to_add)
+            self.save_favorites()
+            print(f"'{song_to_add}' wurde zu deinen Favoriten hinzugefügt.")
+        else:
+            print(f"'{title}' wurde nicht in deiner Musikbibliothek gefunden oder ist bereits ein Favorit.")
+
+    def remove_favorite(self, title):
+        """Entferne ein Lied aus den Favoriten."""
+        song_to_remove = next((s for s in self.favorites if s.title == title), None)
+        if song_to_remove:
+            self.favorites.remove(song_to_remove)
+            self.save_favorites()
+            print(f"'{song_to_remove}' wurde aus deinen Favoriten entfernt.")
+        else:
+            print(f"'{title}' wurde in deinen Favoriten nicht gefunden.")
+
+    def display_favorites(self):
+        """Zeige alle Favoriten an."""
+        if self.favorites:
+            print("Deine Favoriten:")
+            for i, song in enumerate(self.favorites, 1):
+                print(f"{i}. {song}")
+        else:
+            print("Du hast keine Favoriten.")
 
 # Menüfunktionen
 
@@ -386,7 +435,7 @@ def print_menu(title, options):
         print(f"{i}. {option}")
     print(f"{'=' * 30}")
 
-def manage_songs(library):
+def manage_songs(library=MusicLibrary):
     """Verwalte Lieder in der Bibliothek."""
     while True:
         print_menu("Verwalte Lieder", [
@@ -416,7 +465,7 @@ def manage_songs(library):
         else:
             print("Ungültige Option.")
 
-def sort_songs(library):
+def sort_songs(library=MusicLibrary):
     """Zeige Sortieroptionen und führe die gewählte Sortierung durch."""
     while True:
         print_menu("Wähle einen Sortieralgorithmus", [
@@ -441,7 +490,7 @@ def sort_songs(library):
         else:
             print("Ungültige Wahl. Bitte versuche es erneut.")
 
-def search_songs(library):
+def search_songs(library=MusicLibrary):
     """Suche nach Liedern in der Bibliothek."""
     while True:
         print_menu("Suche nach Liedern", [
@@ -486,6 +535,29 @@ def search_songs(library):
         else:
             print("Ungültige Option.")
 
+def manage_favorites(library=MusicLibrary):
+    """Verwalte Favoriten in der Bibliothek."""
+    while True:
+        print_menu("Verwalte Favoriten", [
+            "Zeige Favoriten",
+            "Lied zu Favoriten hinzufügen",
+            "Lied aus Favoriten entfernen",
+            "Zurück"
+        ])
+        choice = input("Wähle eine Option: ")
+
+        if choice == '1':
+            library.display_favorites()
+        elif choice == '2':
+            title = input("Gib den Titel des Liedes ein, das du zu den Favoriten hinzufügen möchtest: ")
+            library.add_favorite(title)
+        elif choice == '3':
+            title = input("Gib den Titel des Liedes ein, das du aus den Favoriten entfernen möchtest: ")
+            library.remove_favorite(title)
+        elif choice == '4':
+            break
+        else:
+            print("Ungültige Option.")
 
 # Hauptprogramm
 
@@ -499,6 +571,7 @@ def main():
             "Lieder verwalten",
             "Nach Liedern suchen",
             "Lieder sortieren",
+            "Favoriten verwalten",
             "Beenden"
         ])
         main_choice = input("Wähle eine Option: ")
@@ -510,6 +583,8 @@ def main():
         elif main_choice == '3':
             sort_songs(library)
         elif main_choice == '4':
+            manage_favorites(library)
+        elif main_choice == '5':
             print("Programm wird beendet.")
             break
         else:
