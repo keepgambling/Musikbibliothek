@@ -1,17 +1,24 @@
 # Musikbibliothek - Dokumentation
 
+Dieses Projekt implementiert eine **Musikbibliothek**, die es ermöglicht, Lieder hinzuzufügen, zu verwalten, zu durchsuchen und zu sortieren. Dabei kommt ein **Rot-Schwarz-Baum** zur effizienten Verwaltung der Lieder zum Einsatz.
+
 ## Inhaltsverzeichnis
 
 - [Klassen](#klassen)
   - [Song](#song)
-  - [RedBlackNode](#redblacknode)
-  - [RedBlackTree](#redblacktree)
   - [MusicLibrary](#musiclibrary)
 - [Funktionen](#funktionen)
   - [manage_songs](#manage_songs)
   - [sort_songs](#sort_songs)
   - [search_songs](#search_songs)
   - [main](#main)
+- [Vorgehen](#vorgehen)
+- [Komplexität (Big-O-Notation)](#komplexität-big-o-notation)
+- [Herausforderungen](#herausforderungen)
+
+
+
+
 
 ## Klassen
 
@@ -33,45 +40,10 @@ Repräsentiert ein Lied mit den Attributen Titel, Künstler und Album.
 - `__eq__(self, other)`
   - Überprüft, ob zwei Lieder gleich sind, indem Titel, Künstler und Album verglichen werden.
 
-### RedBlackNode
-
-Repräsentiert einen Knoten in einem Rot-Schwarz-Baum, der ein Lied speichert und Verweise auf Eltern-, Kinderknoten sowie die Farbe des Knotens enthält.
-
-#### Methoden:
-
-- `__init__(self, song)`
-  - Initialisiert einen neuen Knoten mit einem Lied. Standardmäßig ist die Farbe des Knotens "RED". Ein spezieller NIL-Knoten hat die Farbe "BLACK".
-
-### RedBlackTree
-
-Implementiert einen Rot-Schwarz-Baum zur effizienten Verwaltung und Suche von Liedern.
-
-#### Methoden:
-
-- `__init__(self)`
-  - Initialisiert einen leeren Rot-Schwarz-Baum mit einem NIL-Knoten.
-  
-- `insert(self, song)`
-  - Fügt ein neues Lied in den Baum ein und stellt die Baumstruktur sicher.
-  
-- `fix_insert(self, node)`
-  - Korrigiert den Baum nach der Einfügeoperation, um die Rot-Schwarz-Eigenschaften zu gewährleisten.
-  
-- `left_rotate(self, x)`
-  - Führt eine Linksrotation durch.
-  
-- `right_rotate(self, x)`
-  - Führt eine Rechtsrotation durch.
-  
-- `search(self, song)`
-  - Sucht nach einem Lied im Baum und misst die Laufzeit.
-  
-- `_search_recursive(self, node, song)`
-  - Rekursive Hilfsfunktion für die Suche im Baum.
 
 ### MusicLibrary
 
-Eine Klasse, die die Musikbibliothek verwaltet. Sie enthält Lieder und verwendet einen Rot-Schwarz-Baum für die effiziente Suche.
+Eine Klasse, die die Musikbibliothek verwaltet. Sie enthält Lieder und verwendet einen Rot-Schwarz-Baum für die effiziente Suche und Sortierung.
 
 #### Methoden:
 
@@ -111,18 +83,15 @@ Eine Klasse, die die Musikbibliothek verwaltet. Sie enthält Lieder und verwende
 - `insertion_sort(self)`
   - Sortiert die Lieder mit dem Insertion-Sort-Algorithmus und misst die Laufzeit.
   
-- `merge_sort(self, array)`
+- `merge_sort(self, array=None)`
   - Implementiert den Merge-Sort-Algorithmus.
   
 - `_merge(self, left, right)`
   - Hilfsmethode zum Mischen zweier Arrays während des Merge-Sort-Vorgangs.
   
-- `quick_sort(self, low, high)`
-  - Implementiert den Quick-Sort-Algorithmus.
-  
-- `_partition(self, low, high)`
-  - Partitioniert die Liste für den Quick-Sort-Algorithmus.
-  
+- `heap_sort(self)`
+  - Implementiert den Heap-Sort-Algorithmus.
+
 - `create_random_songs(self, count)`
   - Erstellt eine definierte Anzahl zufälliger Lieder.
 
@@ -130,9 +99,34 @@ Eine Klasse, die die Musikbibliothek verwaltet. Sie enthält Lieder und verwende
 
 ### manage_songs
 
+Ermöglicht das Verwalten der Lieder in der Musikbibliothek. Hier können Lieder hinzugefügt, gelöscht oder angezeigt werden.
+
+### sort_songs
+
+Bietet eine Auswahl von Sortieralgorithmen, darunter **Bubble Sort**, **Insertion Sort**, **Merge Sort** und **Heap Sort**, die auf die Musikbibliothek angewendet werden können.
+
+### search_songs
+
+Bietet mehrere Suchalgorithmen an, um Lieder in der Musikbibliothek zu finden, darunter **Lineare Suche**, **Binäre Suche**, **Interpolation Search** und **Exponential Search**.
+
+### main
+
+Startet das Hauptprogramm und zeigt das Hauptmenü der Musikbibliothek.
 
 ## Vorgehen
 
-## Big O notation
+1. Der Benutzer kann Lieder hinzufügen oder löschen und die gesamte Liste der Lieder anzeigen.
+2. Verschiedene Suchalgorithmen (linear, binär, etc.) können zur Suche verwendet werden.
+3. Die Lieder können nach verschiedenen Kriterien sortiert werden, um die Performance der Algorithmen zu vergleichen.
+
+## Komplexität (Big-O-Notation)
+
+- **Lineare Suche**: O(n)
+- **Binäre Suche**: O(log n) (unter der Voraussetzung, dass die Liste sortiert ist)
+- **Bubble Sort**: O(n²)
+- **Insertion Sort**: O(n²)
+- **Merge Sort**: O(n log n)
+- **Heap Sort**: O(n log n)
+- **Rot-Schwarz-Baum Einfügen/Suchen**: O(log n)
 
 ## Herausforderungen
