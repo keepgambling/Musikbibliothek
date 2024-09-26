@@ -150,37 +150,37 @@ Big-O-Notation der Algorithmen erläutert.
 ## Sortieren von 50.000 Elementen
 
 ### Insertion Sort
-![Insertion Sort 50000](https://github.com/keepgambling/Musikbibliothek/Screenshots/ScreenshotInsertionSort50000.png)
+![Screenshot Insertion Sort 50000](https://github.com/user-attachments/assets/6acf0f26-5dd3-452e-a5f0-693696d3fef0)
 - **Big-O-Notation:** O(n²)
 
 ### Merge Sort
-![Merge Sort 50000](Screenshots/Screenshot Merge Sort 50000.png)
+![Screenshot Merge Sort 50000](https://github.com/user-attachments/assets/08a64439-1cae-4785-9e1c-e9e09356d42d)
 - **Big-O-Notation:** O(n log n)
 
 ### Heap Sort
-![Heap Sort 50000](Screenshots/Screenshot Heap sort 50000.png)
+![Screenshot Heap sort 50000](https://github.com/user-attachments/assets/4f35ef19-aea9-48ab-8fa8-2918d25453b7)
 - **Big-O-Notation:** O(n log n)
 
 ### Bubble Sort
-![Bubble Sort 50000](Screenshots/Screenshot Bubble Sort 50000.png)
+![Screenshot Bubble Sort 50000](https://github.com/user-attachments/assets/dd69e312-3941-4314-81da-585fc2f6d10b)
 - **Big-O-Notation:** O(n²)
 
 ## Sortieren von 10.000 Elementen
 
 ### Insertion Sort
-![Insertion Sort 10000](Screenshots/Screenshot Insertion Sort.png)
+![Screenshot Insertion Sort](https://github.com/user-attachments/assets/0d9e61fe-b892-4368-82b9-b2d4e4b6b844)
 - **Big-O-Notation:** O(n²)
 
 ### Merge Sort
-![Merge Sort 10000](Screenshots/Screenshot Merge sort.png)
+![Screenshot Merge sort](https://github.com/user-attachments/assets/af4b0044-1298-47e3-82da-5389c9645ff1)
 - **Big-O-Notation:** O(n log n)
 
 ### Heap Sort
-![Heap Sort 10000](Screenshots/Screenshot Heap sort.png)
+![Screenshot Heap sort](https://github.com/user-attachments/assets/145539c8-3b2d-4716-b245-471940b8685f)
 - **Big-O-Notation:** O(n log n)
 
 ### Bubble Sort
-![Bubble Sort 10000](Screenshots/Screenshot Bubble_sort.png)
+![Screenshot Bubble_sort](https://github.com/user-attachments/assets/b5ce3125-9771-4abf-917d-a67fbc517dfc)
 - **Big-O-Notation:** O(n²)
 
 Big-O-Notationen der angegebenen Suchalgorithmen:
