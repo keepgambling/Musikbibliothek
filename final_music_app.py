@@ -377,15 +377,25 @@ class MusicLibrary:
 
 # Menüfunktionen
 
-def manage_songs(library = MusicLibrary):
+def print_menu(title, options):
+    """Hilfsfunktion zur Anzeige eines Menüs."""
+    print(f"\n{'=' * 30}")
+    print(f"{title:^30}")
+    print(f"{'=' * 30}")
+    for i, option in enumerate(options, 1):
+        print(f"{i}. {option}")
+    print(f"{'=' * 30}")
+
+def manage_songs(library):
     """Verwalte Lieder in der Bibliothek."""
     while True:
-        print("\nVerwalte Lieder")
-        print("1. Zeige Lieder")
-        print("2. Lied hinzufügen")
-        print("3. Zufällige Lieder erstellen")
-        print("4. Lied löschen")
-        print("5. Zurück")
+        print_menu("Verwalte Lieder", [
+            "Zeige Lieder",
+            "Lied hinzufügen",
+            "Zufällige Lieder erstellen",
+            "Lied löschen",
+            "Zurück"
+        ])
         choice = input("Wähle eine Option: ")
 
         if choice == '1':
@@ -406,15 +416,16 @@ def manage_songs(library = MusicLibrary):
         else:
             print("Ungültige Option.")
 
-def sort_songs(library=MusicLibrary):
+def sort_songs(library):
     """Zeige Sortieroptionen und führe die gewählte Sortierung durch."""
     while True:
-        print("Wähle einen Sortieralgorithmus:")
-        print("1. Bubble Sort")
-        print("2. Insertion Sort")
-        print("3. Merge Sort")
-        print("4. Heap Sort")
-        print("5. Zurück")
+        print_menu("Wähle einen Sortieralgorithmus", [
+            "Bubble Sort",
+            "Insertion Sort",
+            "Merge Sort",
+            "Heap Sort",
+            "Zurück"
+        ])
         choice = input("Gib deine Wahl ein: ").strip()
 
         if choice == '1':
@@ -430,15 +441,16 @@ def sort_songs(library=MusicLibrary):
         else:
             print("Ungültige Wahl. Bitte versuche es erneut.")
 
-def search_songs(library = MusicLibrary):
+def search_songs(library):
     """Suche nach Liedern in der Bibliothek."""
     while True:
-        print("\nSuche nach Liedern")
-        print("1. Lineare Suche")
-        print("2. Binäre Suche")
-        print("3. Interpolation Search")
-        print("4. Exponential Search")
-        print("5. Zurück")
+        print_menu("Suche nach Liedern", [
+            "Lineare Suche",
+            "Binäre Suche",
+            "Interpolation Search",
+            "Exponential Search",
+            "Zurück"
+        ])
         choice = input("Wähle eine Option: ")
 
         if choice == '1':
@@ -474,6 +486,7 @@ def search_songs(library = MusicLibrary):
         else:
             print("Ungültige Option.")
 
+
 # Hauptprogramm
 
 def main():
@@ -482,11 +495,12 @@ def main():
     print("Willkommen in deiner Musikbibliothek")
 
     while True:
-        print("\nHauptmenü")
-        print("1. Lieder verwalten")
-        print("2. Nach Liedern suchen")
-        print("3. Lieder sortieren")
-        print("4. Beenden")
+        print_menu("Hauptmenü", [
+            "Lieder verwalten",
+            "Nach Liedern suchen",
+            "Lieder sortieren",
+            "Beenden"
+        ])
         main_choice = input("Wähle eine Option: ")
 
         if main_choice == '1':
